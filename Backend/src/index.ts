@@ -1,9 +1,8 @@
 import dotenv from "dotenv";
-
+import { generateDocs } from "./utils/docGenerator";
 // Load environment variables FIRST before any other imports
 dotenv.config();
 
-import { generateDocs } from "./utils/docGenerator";
 // Run document generation to ensure Postman collection and Frontend ServiceIds are in sync
 generateDocs();
 
@@ -14,7 +13,7 @@ import { config, isDevelopment } from "./utils/config";
 import { logger } from "./utils/logger";
 import { errorHandler, notFoundHandler, asyncHandler } from "./middleware/errorHandler";
 import { securityHeaders, requestLogger, sanitizeInput, disablePoweredBy } from "./middleware/security";
-import { generalRateLimiter, authRateLimiter, apiRateLimiter } from "./middleware/rateLimiter";
+import { generalRateLimiter, apiRateLimiter } from "./middleware/rateLimiter";
 import { csrfTokenGenerator, csrfProtect } from "./middleware/csrf";
 import { initializeJobHandlers } from "./services/jobHandlers";
 import serviceRoutes from "./routes/serviceRoutes";
@@ -117,7 +116,6 @@ if (isDevelopment()) {
   app.get(
     "/api/diagnostics",
     asyncHandler(async (req: Request, res: Response) => {
-      const { jobQueue } = require("./services/jobQueue");
       res.json({
         server: {
           environment: config.NODE_ENV,

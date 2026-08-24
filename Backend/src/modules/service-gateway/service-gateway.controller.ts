@@ -1,8 +1,8 @@
 import { Response, NextFunction } from "express";
-import { serviceRegistry } from "../services/serviceRegistry";
-import { protect, AuthenticatedRequest } from "../middleware/authMiddleware";
-import { ValidationError, NotFoundError } from "../utils/errors";
-import { asyncHandler } from "../middleware/errorHandler";
+import { serviceRegistry } from "../../services/serviceRegistry";
+import { protect, AuthenticatedRequest } from "../../middleware/authMiddleware";
+import { ValidationError, NotFoundError } from "../../utils/errors";
+import { asyncHandler } from "../../middleware/errorHandler";
 
 /**
  * Centralized Service Dispatcher Controller

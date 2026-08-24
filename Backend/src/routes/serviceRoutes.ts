@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { dispatchService, listServices } from "../controllers/serviceController";
+import { dispatchService, listServices } from "../modules/service-gateway/service-gateway.controller";
 
 const router = Router();
 
