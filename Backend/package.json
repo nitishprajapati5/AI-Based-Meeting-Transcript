@@ -24,7 +24,7 @@
   "license": "ISC",
   "dependencies": {
     "@ai-sdk/google": "^4.0.44",
-    "@ai-sdk/openai": "^4.0.41",
+    "@ai-sdk/openai": "^4.0.50",
     "@ai-sdk/xai": "^4.0.38",
     "@bull-board/api": "^9.3.2",
     "@bull-board/express": "^9.3.2",
