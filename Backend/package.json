@@ -28,7 +28,7 @@
     "@ai-sdk/xai": "^4.0.38",
     "@bull-board/api": "^9.3.2",
     "@bull-board/express": "^9.3.2",
-    "@bull-board/ui": "^9.3.2",
+    "@bull-board/ui": "^9.5.0",
     "@langchain/community": "^1.1.29",
     "@langchain/core": "^1.2.9",
     "@langchain/google-genai": "^2.3.0",
