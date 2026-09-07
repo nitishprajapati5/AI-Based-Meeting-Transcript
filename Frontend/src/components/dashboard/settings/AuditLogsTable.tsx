@@ -21,13 +21,7 @@ import {
 } from "lucide-react";
 import api from "@/lib/axios";
 import { toast } from "sonner";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 export interface RequestLogItem {
   id: number;
@@ -160,13 +154,15 @@ export function AuditLogsTable({ onRefreshStats }: AuditLogsTableProps) {
       GET: "bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/40 dark:text-blue-300 dark:border-blue-800",
       POST: "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800",
       PUT: "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-800",
-      PATCH: "bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-950/40 dark:text-purple-300 dark:border-purple-800",
+      PATCH:
+        "bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-950/40 dark:text-purple-300 dark:border-purple-800",
       DELETE: "bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/40 dark:text-rose-300 dark:border-rose-800",
     };
     return (
       <span
-        className={`px-1.5 py-0.5 rounded-md text-[10px] font-black border uppercase tracking-wider ${colors[m] || "bg-zinc-100 text-zinc-700 border-zinc-200"
-          }`}
+        className={`px-1.5 py-0.5 rounded-md text-[10px] font-black border uppercase tracking-wider ${
+          colors[m] || "bg-zinc-100 text-zinc-700 border-zinc-200"
+        }`}
       >
         {m}
       </span>
@@ -201,10 +197,11 @@ export function AuditLogsTable({ onRefreshStats }: AuditLogsTableProps) {
           <button
             type="button"
             onClick={() => setAutoRefresh(!autoRefresh)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${autoRefresh
-              ? "bg-emerald-50 text-emerald-700 dark:border-emerald-800"
-              : "bg-zinc-50 text-zinc-600 border-zinc-200 hover:bg-zinc-100"
-              }`}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+              autoRefresh
+                ? "bg-emerald-50 text-emerald-700 dark:border-emerald-800"
+                : "bg-zinc-50 text-zinc-600 border-zinc-200 hover:bg-zinc-100"
+            }`}
           >
             <Radio className={`w-3.5 h-3.5 ${autoRefresh ? "animate-pulse text-emerald-500" : "text-zinc-400"}`} />
             <span>Auto Refresh</span>
@@ -262,10 +259,11 @@ export function AuditLogsTable({ onRefreshStats }: AuditLogsTableProps) {
                 setStatusGroup(filter.id);
                 setPage(1);
               }}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${statusGroup === filter.id
-                ? "bg-zinc-900 text-white shadow-xs"
-                : "bg-zinc-50 text-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-zinc-200/80"
-                }`}
+              className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+                statusGroup === filter.id
+                  ? "bg-zinc-900 text-white shadow-xs"
+                  : "bg-zinc-50 text-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-zinc-200/80"
+              }`}
             >
               {filter.label}
             </button>
@@ -337,7 +335,6 @@ export function AuditLogsTable({ onRefreshStats }: AuditLogsTableProps) {
                     <td className="py-3 px-3">{getMethodBadge(log.method)}</td>
                     <td className="py-3 px-4 max-w-70">
                       {log.serviceId ? (
-
                         <div className="space-y-0.5">
                           <span className="font-mono font-bold text-zinc-900 block truncate text-[11px]">
                             {log.serviceId}
@@ -345,9 +342,7 @@ export function AuditLogsTable({ onRefreshStats }: AuditLogsTableProps) {
                           <span className="text-[10px] text-zinc-400 truncate block">{log.path}</span>
                         </div>
                       ) : (
-                        <span className="font-mono text-zinc-800 truncate block text-[11px]">
-                          {log.path}
-                        </span>
+                        <span className="font-mono text-zinc-800 truncate block text-[11px]">{log.path}</span>
                       )}
                     </td>
                     <td className="py-3 px-3">{formatDuration(log.duration)}</td>
@@ -442,9 +437,7 @@ export function AuditLogsTable({ onRefreshStats }: AuditLogsTableProps) {
                   <span className="text-zinc-400 block text-[10px] uppercase font-semibold">Method & Endpoint</span>
                   <div className="flex items-center gap-1.5 mt-0.5">
                     {getMethodBadge(selectedLog.method)}
-                    <span className="font-mono font-bold text-zinc-800 truncate">
-                      {selectedLog.path}
-                    </span>
+                    <span className="font-mono font-bold text-zinc-800 truncate">{selectedLog.path}</span>
                   </div>
                 </div>
 
@@ -462,9 +455,7 @@ export function AuditLogsTable({ onRefreshStats }: AuditLogsTableProps) {
 
                 <div>
                   <span className="text-zinc-400 block text-[10px] uppercase font-semibold">Client IP</span>
-                  <span className="font-mono text-zinc-700 block mt-0.5">
-                    {selectedLog.ipAddress || "127.0.0.1"}
-                  </span>
+                  <span className="font-mono text-zinc-700 block mt-0.5">{selectedLog.ipAddress || "127.0.0.1"}</span>
                 </div>
               </div>
 

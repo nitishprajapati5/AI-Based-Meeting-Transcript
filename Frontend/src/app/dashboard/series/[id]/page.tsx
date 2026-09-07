@@ -6,16 +6,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { callService } from "@/lib/serviceApi";
 import { SERVICE_IDS } from "@/lib/serviceIds";
-import {
-  Repeat2,
-  Brain,
-  Loader2,
-  ArrowLeft,
-  ChevronRight,
-  Sparkles,
-  RefreshCw,
-  Calendar,
-} from "lucide-react";
+import { Repeat2, Brain, Loader2, ArrowLeft, ChevronRight, Sparkles, RefreshCw, Calendar } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { SeriesTimeline, SeriesIntelligencePanel } from "@/components/dashboard/series";
@@ -75,10 +66,7 @@ export default function SeriesDetailPage({ params }: { params: Promise<{ id: str
     return (
       <div className="flex flex-col items-center justify-center py-24 text-center gap-4">
         <p className="font-bold text-zinc-900 dark:text-zinc-100">Series not found</p>
-        <Link
-          href="/dashboard/series"
-          className="text-sm text-indigo-500 hover:underline flex items-center gap-1"
-        >
+        <Link href="/dashboard/series" className="text-sm text-indigo-500 hover:underline flex items-center gap-1">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Series
         </Link>
       </div>

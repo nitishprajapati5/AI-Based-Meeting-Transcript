@@ -26,7 +26,9 @@ interface AppUser {
 interface CreateActionItemModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (itemData: Partial<ActionItem> & { meetingId: string; subtasks?: SubTask[]; dependsOn?: string[] }) => Promise<void> | void;
+  onSave: (
+    itemData: Partial<ActionItem> & { meetingId: string; subtasks?: SubTask[]; dependsOn?: string[] }
+  ) => Promise<void> | void;
   meetings: Meeting[];
   initialData?: (ActionItem & { meetingId?: string; id?: string; subtasks?: SubTask[]; dependsOn?: string[] }) | null;
   availableActionItems?: ActionItemWithContext[];
@@ -264,10 +266,18 @@ export function CreateActionItemModal({
                   <SelectValue placeholder="Select priority" />
                 </SelectTrigger>
                 <SelectContent className="bg-card border-border">
-                  <SelectItem value="Low" className="text-xs sm:text-sm">Low</SelectItem>
-                  <SelectItem value="Medium" className="text-xs sm:text-sm">Medium</SelectItem>
-                  <SelectItem value="High" className="text-xs sm:text-sm">High</SelectItem>
-                  <SelectItem value="Urgent" className="text-xs sm:text-sm">Urgent</SelectItem>
+                  <SelectItem value="Low" className="text-xs sm:text-sm">
+                    Low
+                  </SelectItem>
+                  <SelectItem value="Medium" className="text-xs sm:text-sm">
+                    Medium
+                  </SelectItem>
+                  <SelectItem value="High" className="text-xs sm:text-sm">
+                    High
+                  </SelectItem>
+                  <SelectItem value="Urgent" className="text-xs sm:text-sm">
+                    Urgent
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -282,10 +292,18 @@ export function CreateActionItemModal({
                   <SelectValue placeholder="Select status" />
                 </SelectTrigger>
                 <SelectContent className="bg-card border-border">
-                  <SelectItem value="Open" className="text-xs sm:text-sm">Open</SelectItem>
-                  <SelectItem value="In Progress" className="text-xs sm:text-sm">In Progress</SelectItem>
-                  <SelectItem value="Blocked" className="text-xs sm:text-sm">Blocked</SelectItem>
-                  <SelectItem value="Completed" className="text-xs sm:text-sm">Completed</SelectItem>
+                  <SelectItem value="Open" className="text-xs sm:text-sm">
+                    Open
+                  </SelectItem>
+                  <SelectItem value="In Progress" className="text-xs sm:text-sm">
+                    In Progress
+                  </SelectItem>
+                  <SelectItem value="Blocked" className="text-xs sm:text-sm">
+                    Blocked
+                  </SelectItem>
+                  <SelectItem value="Completed" className="text-xs sm:text-sm">
+                    Completed
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>

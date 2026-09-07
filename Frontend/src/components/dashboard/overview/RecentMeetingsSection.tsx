@@ -27,9 +27,7 @@ export function RecentMeetingsSection({ isLoading, recentMeetings, onViewDetails
       <Card className="paper-card rounded-xl border border-border shadow-xs overflow-hidden">
         <CardHeader className="flex flex-row items-center justify-between border-b border-border bg-muted/30 py-4 px-6">
           <div className="space-y-0.5">
-            <CardTitle className="text-base font-bold text-foreground">
-              Recently Created Meetings
-            </CardTitle>
+            <CardTitle className="text-base font-bold text-foreground">Recently Created Meetings</CardTitle>
             <CardDescription className="text-xs text-muted-foreground">
               Latest meeting notes and transcripts uploaded to Syncra.
             </CardDescription>
@@ -94,9 +92,7 @@ export function RecentMeetingsSection({ isLoading, recentMeetings, onViewDetails
                       <div className="flex flex-col items-center justify-center space-y-3">
                         <EmptyMeetingsIllustration className="w-24 h-24 text-muted-foreground/60" />
                         <div>
-                          <p className="text-sm font-bold text-foreground">
-                            No meetings recorded yet.
-                          </p>
+                          <p className="text-sm font-bold text-foreground">No meetings recorded yet.</p>
                           <p className="text-xs text-muted-foreground mt-1">
                             Click &quot;Manage Meetings&quot; to get started.
                           </p>
@@ -174,10 +170,7 @@ export function RecentMeetingsSection({ isLoading, recentMeetings, onViewDetails
           <div className="md:hidden space-y-3 p-4">
             {isLoading ? (
               Array.from({ length: 3 }).map((_, idx) => (
-                <div
-                  key={idx}
-                  className="p-4 rounded-xl border border-border paper-sheet space-y-3"
-                >
+                <div key={idx} className="p-4 rounded-xl border border-border paper-sheet space-y-3">
                   <div className="flex items-center justify-between">
                     <Skeleton className="h-5 w-40 rounded-md" />
                     <Skeleton className="h-5 w-20 rounded-md" />

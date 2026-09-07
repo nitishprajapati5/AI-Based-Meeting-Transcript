@@ -113,12 +113,8 @@ export function MeetingsTable({
                 <div className="flex flex-col items-center justify-center space-y-3">
                   <EmptyMeetingsIllustration className="w-24 h-24 text-muted-foreground/60" />
                   <div>
-                    <p className="text-sm font-bold text-foreground">
-                      No meetings found matching your search.
-                    </p>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      Try adjusting your filters or search keywords.
-                    </p>
+                    <p className="text-sm font-bold text-foreground">No meetings found matching your search.</p>
+                    <p className="text-xs text-muted-foreground mt-1">Try adjusting your filters or search keywords.</p>
                   </div>
                 </div>
               </TableCell>
@@ -192,10 +188,11 @@ export function MeetingsTable({
                         size="icon"
                         onClick={() => onTogglePin(meeting)}
                         disabled={pinningMeetingId === meeting.id}
-                        className={`h-8 w-8 rounded-md ${meeting.isPinned
-                          ? "text-indigo-500 hover:bg-indigo-500/10"
-                          : "text-muted-foreground hover:bg-muted"
-                          }`}
+                        className={`h-8 w-8 rounded-md ${
+                          meeting.isPinned
+                            ? "text-indigo-500 hover:bg-indigo-500/10"
+                            : "text-muted-foreground hover:bg-muted"
+                        }`}
                         title={meeting.isPinned ? "Unpin Meeting" : "Pin Meeting"}
                       >
                         {pinningMeetingId === meeting.id ? (

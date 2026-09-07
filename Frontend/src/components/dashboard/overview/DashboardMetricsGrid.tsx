@@ -90,9 +90,7 @@ export function DashboardMetricsGrid({ metrics, isLoading }: DashboardMetricsGri
                 {isLoading ? (
                   <Skeleton className="h-8 w-20 rounded-md my-1" />
                 ) : (
-                  <div className="text-3xl font-extrabold tracking-tight text-foreground">
-                    {item.value}
-                  </div>
+                  <div className="text-3xl font-extrabold tracking-tight text-foreground">{item.value}</div>
                 )}
                 <p className="text-[11px] text-muted-foreground mt-1.5 font-medium">{item.subtitle}</p>
               </CardContent>

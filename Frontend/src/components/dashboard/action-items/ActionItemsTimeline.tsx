@@ -219,8 +219,8 @@ export function ActionItemsTimeline({
                         item.status === "Completed"
                           ? "opacity-75 bg-muted/20"
                           : depStatus?.isBlocked
-                          ? "border-amber-500/30 bg-amber-500/5"
-                          : "border-border"
+                            ? "border-amber-500/30 bg-amber-500/5"
+                            : "border-border"
                       }`}
                     >
                       {/* Top Row: Task Title + Meeting + Actions */}
@@ -305,7 +305,9 @@ export function ActionItemsTimeline({
                               className="flex items-center gap-1.5 font-medium text-foreground hover:text-primary transition-colors cursor-pointer"
                             >
                               <CheckSquare className="h-3.5 w-3.5 text-indigo-500" />
-                              <span>Subtasks ({completedSubtasks}/{subtasks.length})</span>
+                              <span>
+                                Subtasks ({completedSubtasks}/{subtasks.length})
+                              </span>
                               {isChecklistOpen ? (
                                 <ChevronUp className="h-3 w-3 text-muted-foreground" />
                               ) : (
@@ -357,7 +359,9 @@ export function ActionItemsTimeline({
                         </div>
                         <div className="flex items-center gap-1.5">
                           <Clock className="h-3.5 w-3.5 text-muted-foreground/70" />
-                          <span>Due: <strong className="text-foreground">{item.dueDate}</strong></span>
+                          <span>
+                            Due: <strong className="text-foreground">{item.dueDate}</strong>
+                          </span>
                         </div>
                       </div>
                     </div>

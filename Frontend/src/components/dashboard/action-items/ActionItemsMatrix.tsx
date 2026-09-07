@@ -220,8 +220,8 @@ export function ActionItemsMatrix({
                         item.status === "Completed"
                           ? "opacity-75 bg-muted/20"
                           : depStatus?.isBlocked
-                          ? "border-amber-500/30 bg-amber-500/5"
-                          : "border-border"
+                            ? "border-amber-500/30 bg-amber-500/5"
+                            : "border-border"
                       }`}
                     >
                       {/* Card Top: Title & Controls */}
@@ -305,7 +305,9 @@ export function ActionItemsMatrix({
                               className="flex items-center gap-1 font-medium text-foreground hover:text-primary transition-colors cursor-pointer"
                             >
                               <CheckSquare className="h-3 w-3 text-indigo-500" />
-                              <span>Subtasks ({completedSubtasks}/{subtasks.length})</span>
+                              <span>
+                                Subtasks ({completedSubtasks}/{subtasks.length})
+                              </span>
                               {isChecklistOpen ? (
                                 <ChevronUp className="h-2.5 w-2.5 text-muted-foreground" />
                               ) : (

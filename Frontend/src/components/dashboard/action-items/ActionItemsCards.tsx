@@ -63,12 +63,8 @@ export function ActionItemsCards({
         <div className="p-8 text-center bg-card rounded-2xl border border-border text-muted-foreground flex flex-col items-center justify-center space-y-3">
           <EmptyActionItemsIllustration className="w-20 h-20 text-muted-foreground/40" />
           <div>
-            <p className="text-sm font-bold text-foreground">
-              No action items found matching your filters.
-            </p>
-            <p className="text-xs text-muted-foreground mt-1">
-              Try clearing search parameters or overdue filter.
-            </p>
+            <p className="text-sm font-bold text-foreground">No action items found matching your filters.</p>
+            <p className="text-xs text-muted-foreground mt-1">Try clearing search parameters or overdue filter.</p>
           </div>
         </div>
       ) : (
@@ -86,13 +82,13 @@ export function ActionItemsCards({
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: idx * 0.04 }}
               className={`p-4 rounded-xl border bg-card text-card-foreground shadow-xs space-y-3 transition-colors ${
-                item.isOverdue
-                  ? "border-destructive/40 bg-destructive/5"
-                  : "border-border"
+                item.isOverdue ? "border-destructive/40 bg-destructive/5" : "border-border"
               }`}
             >
               <div className="flex items-start justify-between gap-2">
-                <p className={`text-sm font-bold text-foreground leading-snug ${item.status === "Completed" ? "line-through text-muted-foreground" : ""}`}>
+                <p
+                  className={`text-sm font-bold text-foreground leading-snug ${item.status === "Completed" ? "line-through text-muted-foreground" : ""}`}
+                >
                   {item.task}
                 </p>
                 <div className="flex items-center gap-1 shrink-0">
@@ -117,7 +113,10 @@ export function ActionItemsCards({
 
               <div className="flex flex-wrap items-center gap-1.5">
                 {item.meetingTitle && (
-                  <Badge variant="outline" className="text-[10px] font-normal px-2 py-0.5 border border-border bg-muted/40 text-muted-foreground rounded-md">
+                  <Badge
+                    variant="outline"
+                    className="text-[10px] font-normal px-2 py-0.5 border border-border bg-muted/40 text-muted-foreground rounded-md"
+                  >
                     {item.meetingTitle}
                   </Badge>
                 )}
@@ -139,12 +138,10 @@ export function ActionItemsCards({
                     className="flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
                   >
                     <CheckSquare className="h-3.5 w-3.5 text-indigo-500" />
-                    <span>Checklist ({completedSubtasks}/{subtasks.length})</span>
-                    {isChecklistOpen ? (
-                      <ChevronUp className="h-3 w-3" />
-                    ) : (
-                      <ChevronDown className="h-3 w-3" />
-                    )}
+                    <span>
+                      Checklist ({completedSubtasks}/{subtasks.length})
+                    </span>
+                    {isChecklistOpen ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
                   </button>
                   <Progress value={subtaskProgress} className="h-1" />
 

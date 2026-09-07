@@ -84,37 +84,41 @@ export function SecurityTabContent({ sessions }: SecurityTabContentProps) {
           <div className="flex items-center gap-1 p-1 bg-zinc-100/80 rounded-2xl border border-zinc-200/60 self-start sm:self-center">
             <button
               onClick={() => setActiveSubSection("all")}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${activeSubSection === "all"
-                ? "bg-white text-zinc-900 shadow-xs"
-                : "text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200"
-                }`}
+              className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                activeSubSection === "all"
+                  ? "bg-white text-zinc-900 shadow-xs"
+                  : "text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200"
+              }`}
             >
               All
             </button>
             <button
               onClick={() => setActiveSubSection("health")}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${activeSubSection === "health"
-                ? "bg-white text-zinc-900 shadow-xs"
-                : "text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200"
-                }`}
+              className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                activeSubSection === "health"
+                  ? "bg-white text-zinc-900 shadow-xs"
+                  : "text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200"
+              }`}
             >
               API Health
             </button>
             <button
               onClick={() => setActiveSubSection("logs")}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${activeSubSection === "logs"
-                ? "bg-white text-zinc-900 shadow-xs"
-                : "text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200"
-                }`}
+              className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                activeSubSection === "logs"
+                  ? "bg-white text-zinc-900 shadow-xs"
+                  : "text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200"
+              }`}
             >
               Logs
             </button>
             <button
               onClick={() => setActiveSubSection("sessions")}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${activeSubSection === "sessions"
-                ? "bg-white dark:text-zinc-100 shadow-xs"
-                : "text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200"
-                }`}
+              className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                activeSubSection === "sessions"
+                  ? "bg-white dark:text-zinc-100 shadow-xs"
+                  : "text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200"
+              }`}
             >
               Sessions
             </button>
@@ -162,9 +166,7 @@ export function SecurityTabContent({ sessions }: SecurityTabContentProps) {
                 </span>
                 Active Devices & Login Sessions
               </h3>
-              <p className="text-xs text-zinc-500">
-                Current authenticated browser sessions and IP access history.
-              </p>
+              <p className="text-xs text-zinc-500">Current authenticated browser sessions and IP access history.</p>
             </div>
             <span className="text-xs bg-zinc-100 text-zinc-900 px-3 py-1 rounded-full font-semibold border border-zinc-200">
               {sessions.length} Active Session{sessions.length !== 1 ? "s" : ""}
@@ -176,10 +178,9 @@ export function SecurityTabContent({ sessions }: SecurityTabContentProps) {
               sessions.map((sess) => (
                 <div
                   key={sess.id}
-                  className={`p-4 sm:p-5 rounded-2xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${sess.isCurrent
-                    ? "bg-zinc-50/90 border-zinc-300 shadow-xs"
-                    : "bg-white border-zinc-200"
-                    }`}
+                  className={`p-4 sm:p-5 rounded-2xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
+                    sess.isCurrent ? "bg-zinc-50/90 border-zinc-300 shadow-xs" : "bg-white border-zinc-200"
+                  }`}
                 >
                   <div className="flex items-start gap-3.5">
                     <div className="p-2.5 rounded-xl dark:bg-zinc-900 border border-zinc-200 text-zinc-900 mt-0.5">
@@ -213,11 +214,11 @@ export function SecurityTabContent({ sessions }: SecurityTabContentProps) {
                     <span>
                       {sess.lastActive
                         ? new Date(sess.lastActive).toLocaleDateString(undefined, {
-                          month: "short",
-                          day: "numeric",
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })
+                            month: "short",
+                            day: "numeric",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })
                         : "Active Now"}
                     </span>
                   </div>

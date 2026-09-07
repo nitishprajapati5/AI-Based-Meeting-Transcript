@@ -893,9 +893,7 @@ export async function generateCrossMeetingIntelligence(
       const summaryText = m.summary
         ? [
             `Purpose: ${m.summary.purpose || ""}`,
-            m.summary.discussionPoints?.length
-              ? `Topics: ${m.summary.discussionPoints.slice(0, 3).join("; ")}`
-              : "",
+            m.summary.discussionPoints?.length ? `Topics: ${m.summary.discussionPoints.slice(0, 3).join("; ")}` : "",
             m.summary.importantConcerns?.length
               ? `Concerns: ${m.summary.importantConcerns.slice(0, 2).join("; ")}`
               : "",
@@ -1017,4 +1015,3 @@ Based on the above meetings, provide a structured cross-meeting intelligence rep
     return buildHeuristicIntelligence();
   }
 }
-

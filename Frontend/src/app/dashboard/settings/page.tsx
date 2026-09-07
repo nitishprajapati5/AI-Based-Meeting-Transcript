@@ -214,7 +214,6 @@ export default function SettingsPage() {
             <SecurityTabContent sessions={sessions} />
           </MobileCollapsibleTab>
 
-
           <MobileCollapsibleTab
             label="Appearance"
             icon={Palette}
@@ -263,11 +262,7 @@ function MobileCollapsibleTab({ label, icon: Icon, isOpen, onClick, children }: 
           <ChevronDown className="w-4.5 h-4.5 text-zinc-500" />
         )}
       </button>
-      {isOpen && (
-        <div className="p-1 border-t border-zinc-100 bg-zinc-50/20">
-          {children}
-        </div>
-      )}
+      {isOpen && <div className="p-1 border-t border-zinc-100 bg-zinc-50/20">{children}</div>}
     </div>
   );
 }

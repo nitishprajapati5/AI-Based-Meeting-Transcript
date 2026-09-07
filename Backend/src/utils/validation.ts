@@ -366,5 +366,3 @@ export const removeMeetingFromSeriesSchema = z.object({
 export type CreateSeriesInput = z.infer<typeof createSeriesSchema>;
 export type UpdateSeriesInput = z.infer<typeof updateSeriesSchema>;
 export type AssignMeetingToSeriesInput = z.infer<typeof assignMeetingToSeriesSchema>;
-
-

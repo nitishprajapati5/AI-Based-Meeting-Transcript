@@ -329,7 +329,9 @@ export function ActionItemsTable({
                     </TableCell>
                     <TableCell className="py-3.5 font-medium text-xs text-foreground max-w-[280px]">
                       <div className="flex flex-col gap-1.5">
-                        <span className={`font-semibold text-foreground ${item.status === "Completed" ? "line-through text-muted-foreground" : ""}`}>
+                        <span
+                          className={`font-semibold text-foreground ${item.status === "Completed" ? "line-through text-muted-foreground" : ""}`}
+                        >
                           {item.task}
                         </span>
 
@@ -362,7 +364,9 @@ export function ActionItemsTable({
                               className="flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
                             >
                               <CheckSquare className="h-3.5 w-3.5 text-indigo-500" />
-                              <span>Checklist ({completedSubtasks}/{subtasks.length})</span>
+                              <span>
+                                Checklist ({completedSubtasks}/{subtasks.length})
+                              </span>
                               {isChecklistOpen ? (
                                 <ChevronUp className="h-3 w-3" />
                               ) : (
@@ -384,7 +388,11 @@ export function ActionItemsTable({
                                       onChange={(e) => onToggleSubtask?.(item.id, st.id, e.target.checked)}
                                       className="rounded border-border text-primary focus:ring-ring h-3 w-3"
                                     />
-                                    <span className={st.completed ? "line-through text-muted-foreground" : "text-foreground"}>
+                                    <span
+                                      className={
+                                        st.completed ? "line-through text-muted-foreground" : "text-foreground"
+                                      }
+                                    >
                                       {st.title}
                                     </span>
                                   </label>

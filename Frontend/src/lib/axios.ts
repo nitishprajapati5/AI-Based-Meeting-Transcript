@@ -163,7 +163,6 @@ function matchRequest(
   return null;
 }
 
-
 /**
  * Request Interceptor
  * Injects JWT token from localStorage and maps REST calls to service dispatcher

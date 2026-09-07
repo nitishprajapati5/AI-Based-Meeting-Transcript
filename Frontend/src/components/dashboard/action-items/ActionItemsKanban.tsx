@@ -194,8 +194,8 @@ export function ActionItemsKanban({
                           item.isOverdue
                             ? "border-red-500/30 bg-red-500/10"
                             : depStatus?.isBlocked
-                            ? "border-amber-500/30 bg-amber-500/5"
-                            : "border-border hover:border-ring"
+                              ? "border-amber-500/30 bg-amber-500/5"
+                              : "border-border hover:border-ring"
                         } ${updatingItemId === item.id ? "opacity-50 pointer-events-none" : ""}`}
                       >
                         {/* Drag Handle Indicator */}
@@ -227,7 +227,9 @@ export function ActionItemsKanban({
                         </div>
 
                         {/* Task Text */}
-                        <p className={`text-xs font-semibold text-foreground leading-snug ${item.status === "Completed" ? "line-through text-muted-foreground" : ""}`}>
+                        <p
+                          className={`text-xs font-semibold text-foreground leading-snug ${item.status === "Completed" ? "line-through text-muted-foreground" : ""}`}
+                        >
                           {item.task}
                         </p>
 
@@ -250,7 +252,9 @@ export function ActionItemsKanban({
                                 className="flex items-center gap-1 font-medium text-foreground hover:text-primary transition-colors cursor-pointer"
                               >
                                 <CheckSquare className="h-3 w-3 text-indigo-500" />
-                                <span>Subtasks ({completedSubtasks}/{subtasks.length})</span>
+                                <span>
+                                  Subtasks ({completedSubtasks}/{subtasks.length})
+                                </span>
                                 {isChecklistOpen ? (
                                   <ChevronUp className="h-2.5 w-2.5 text-muted-foreground" />
                                 ) : (

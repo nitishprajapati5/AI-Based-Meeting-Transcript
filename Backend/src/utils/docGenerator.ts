@@ -154,7 +154,16 @@ export function generateDocs(): void {
       }
     }
 
-    const categoriesOrder = ["auth", "meetings", "actionItems", "dashboard", "settings", "notifications", "jobs", "audit"];
+    const categoriesOrder = [
+      "auth",
+      "meetings",
+      "actionItems",
+      "dashboard",
+      "settings",
+      "notifications",
+      "jobs",
+      "audit",
+    ];
     const foldersMap: Record<string, string> = {
       auth: "Authentication",
       meetings: "Meetings",
@@ -165,7 +174,6 @@ export function generateDocs(): void {
       jobs: "Jobs",
       audit: "Audit & Security",
     };
-
 
     const postmanCollection = {
       info: {

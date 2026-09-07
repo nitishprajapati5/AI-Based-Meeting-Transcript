@@ -65,20 +65,18 @@ export function AuditHealthMetrics({ stats, isLoading, onRefresh }: AuditHealthM
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-zinc-500">System Health</span>
             <span
-              className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-semibold border ${isHealthy
-                ? "bg-emerald-50 text-emerald-700 border-emerald-200"
-                : isDegraded
-                  ? "bg-amber-50 text-amber-700 border-amber-200"
-                  : "bg-rose-50 text-rose-700 border-rose-200"
-                }`}
+              className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-semibold border ${
+                isHealthy
+                  ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                  : isDegraded
+                    ? "bg-amber-50 text-amber-700 border-amber-200"
+                    : "bg-rose-50 text-rose-700 border-rose-200"
+              }`}
             >
               <span
-                className={`w-1.5 h-1.5 rounded-full ${isHealthy
-                  ? "bg-emerald-500 animate-pulse"
-                  : isDegraded
-                    ? "bg-amber-500"
-                    : "bg-rose-500 animate-ping"
-                  }`}
+                className={`w-1.5 h-1.5 rounded-full ${
+                  isHealthy ? "bg-emerald-500 animate-pulse" : isDegraded ? "bg-amber-500" : "bg-rose-500 animate-ping"
+                }`}
               />
               {health.status}
             </span>
@@ -90,8 +88,9 @@ export function AuditHealthMetrics({ stats, isLoading, onRefresh }: AuditHealthM
             </div>
             <div className="mt-2 w-full bg-zinc-100 h-1.5 rounded-full overflow-hidden">
               <div
-                className={`h-full rounded-full transition-all duration-500 ${isHealthy ? "bg-emerald-500" : isDegraded ? "bg-amber-500" : "bg-rose-500"
-                  }`}
+                className={`h-full rounded-full transition-all duration-500 ${
+                  isHealthy ? "bg-emerald-500" : isDegraded ? "bg-amber-500" : "bg-rose-500"
+                }`}
                 style={{ width: `${Math.min(100, health.successRate)}%` }}
               />
             </div>
@@ -107,9 +106,7 @@ export function AuditHealthMetrics({ stats, isLoading, onRefresh }: AuditHealthM
             </div>
           </div>
           <div className="mt-3">
-            <div className="text-2xl font-black dark:text-zinc-100">
-              {health.totalRequests.toLocaleString()}
-            </div>
+            <div className="text-2xl font-black dark:text-zinc-100">{health.totalRequests.toLocaleString()}</div>
             <div className="text-[11px] text-zinc-500 mt-1 flex items-center gap-1.5">
               <span className="text-emerald-600 font-semibold flex items-center">
                 <CheckCircle2 className="w-3 h-3 mr-0.5" />
@@ -147,13 +144,9 @@ export function AuditHealthMetrics({ stats, isLoading, onRefresh }: AuditHealthM
             </div>
           </div>
           <div className="mt-3">
-            <div className="text-2xl font-black text-zinc-900">
-              {health.errorCount.toLocaleString()}
-            </div>
+            <div className="text-2xl font-black text-zinc-900">{health.errorCount.toLocaleString()}</div>
             <div className="text-[11px] text-zinc-500 mt-1 flex items-center gap-1.5">
-              <span
-                className={`font-semibold ${health.errorRate > 0 ? "text-rose-600" : "text-emerald-600"}`}
-              >
+              <span className={`font-semibold ${health.errorRate > 0 ? "text-rose-600" : "text-emerald-600"}`}>
                 {health.errorRate}%
               </span>
               <span>of all requests</span>
@@ -169,9 +162,7 @@ export function AuditHealthMetrics({ stats, isLoading, onRefresh }: AuditHealthM
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Server className="w-4 h-4 text-zinc-500" />
-              <h4 className="text-xs font-bold text-zinc-900 uppercase tracking-wider">
-                HTTP Status Distribution
-              </h4>
+              <h4 className="text-xs font-bold text-zinc-900 uppercase tracking-wider">HTTP Status Distribution</h4>
             </div>
             <span className="text-[11px] text-zinc-400">{health.totalRequests} sampled requests</span>
           </div>
@@ -241,9 +232,7 @@ export function AuditHealthMetrics({ stats, isLoading, onRefresh }: AuditHealthM
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-indigo-500" />
-              <h4 className="text-xs font-bold text-zinc-900 uppercase tracking-wider">
-                Top Services
-              </h4>
+              <h4 className="text-xs font-bold text-zinc-900 uppercase tracking-wider">Top Services</h4>
             </div>
             <span className="text-[11px] text-zinc-400">by volume</span>
           </div>
@@ -255,9 +244,7 @@ export function AuditHealthMetrics({ stats, isLoading, onRefresh }: AuditHealthM
                   key={svc.serviceId}
                   className="flex items-center justify-between p-2 rounded-xl bg-zinc-50 border border-zinc-100 text-xs"
                 >
-                  <span className="font-mono text-[11px] text-zinc-800 truncate max-w-42.5">
-                    {svc.serviceId}
-                  </span>
+                  <span className="font-mono text-[11px] text-zinc-800 truncate max-w-42.5">{svc.serviceId}</span>
 
                   <span className="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 font-bold text-[10px]">
                     {svc.count} calls

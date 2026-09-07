@@ -184,9 +184,7 @@ export function Sidebar() {
               </svg>
             </div>
             <div>
-              <h2 className="font-bold text-base leading-none tracking-tight text-zinc-900">
-                Syncra
-              </h2>
+              <h2 className="font-bold text-base leading-none tracking-tight text-zinc-900">Syncra</h2>
               <span className="text-[11px] font-medium text-zinc-500">AI Assistant</span>
             </div>
           </Link>
@@ -215,10 +213,11 @@ export function Sidebar() {
             return (
               <Link key={item.label} href={item.href} className="relative block">
                 <div
-                  className={`flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium transition-all ${isActive
-                    ? "bg-zinc-900 text-white font-semibold"
-                    : "text-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900"
-                    }`}
+                  className={`flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium transition-all ${
+                    isActive
+                      ? "bg-zinc-900 text-white font-semibold"
+                      : "text-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900"
+                  }`}
                 >
                   <Icon className="h-4.5 w-4.5" />
                   <span>{item.label}</span>
@@ -248,19 +247,14 @@ export function Sidebar() {
         <div className="flex items-center gap-3">
           <Avatar className="h-8 w-8 border border-zinc-200">
             <AvatarImage src="" />
-            <AvatarFallback className="bg-zinc-900 text-white text-xs font-bold">
-              {userInitials}
-            </AvatarFallback>
+            <AvatarFallback className="bg-zinc-900 text-white text-xs font-bold">{userInitials}</AvatarFallback>
           </Avatar>
           <div className="text-xs overflow-hidden">
             <p className="font-semibold dark:text-zinc-100 truncate max-w-27.5">{userName}</p>
             <p className="text-zinc-500 truncate max-w-27.5" title={userEmail}>
               {userEmail}
             </p>
-            <p
-              className="text-[10px] font-semibold text-zinc-400 mt-0.5"
-              title={`Frontend Version: v${pkg.version}`}
-            >
+            <p className="text-[10px] font-semibold text-zinc-400 mt-0.5" title={`Frontend Version: v${pkg.version}`}>
               v{pkg.version}
             </p>
           </div>
@@ -337,8 +331,9 @@ export function Sidebar() {
 
       {/* Mobile Drawer Sidebar */}
       <aside
-        className={`lg:hidden fixed top-0 bottom-0 left-0 z-50 w-64 bg-white border-r border-zinc-200 transform transition-transform duration-300 ease-out ${isMobileOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
+        className={`lg:hidden fixed top-0 bottom-0 left-0 z-50 w-64 bg-white border-r border-zinc-200 transform transition-transform duration-300 ease-out ${
+          isMobileOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
       >
         {sidebarContent}
       </aside>
@@ -434,10 +429,11 @@ export function Sidebar() {
                         {items.map((item) => (
                           <div
                             key={item.id}
-                            className={`p-4 rounded-2xl border transition-all ${item.isRead
-                              ? "bg-white border-zinc-200 opacity-70"
-                              : "bg-zinc-50 border-zinc-300 font-semibold"
-                              }`}
+                            className={`p-4 rounded-2xl border transition-all ${
+                              item.isRead
+                                ? "bg-white border-zinc-200 opacity-70"
+                                : "bg-zinc-50 border-zinc-300 font-semibold"
+                            }`}
                           >
                             <div className="flex items-start gap-3">
                               <div className="p-2 rounded-xl bg-zinc-100 border border-zinc-200 text-zinc-900 mt-0.5">
@@ -445,9 +441,7 @@ export function Sidebar() {
                               </div>
                               <div className="flex-1 space-y-1 min-w-0">
                                 <div className="flex items-center justify-between gap-2">
-                                  <span className="font-bold text-xs text-zinc-900 truncate">
-                                    {item.title}
-                                  </span>
+                                  <span className="font-bold text-xs text-zinc-900 truncate">{item.title}</span>
                                   <span className="text-[9px] text-zinc-400 shrink-0 font-medium">
                                     {new Date(item.createdAt).toLocaleTimeString([], {
                                       hour: "2-digit",
@@ -455,9 +449,7 @@ export function Sidebar() {
                                     })}
                                   </span>
                                 </div>
-                                <p className="text-xs text-zinc-600 leading-relaxed font-medium">
-                                  {item.message}
-                                </p>
+                                <p className="text-xs text-zinc-600 leading-relaxed font-medium">{item.message}</p>
                               </div>
                             </div>
                           </div>

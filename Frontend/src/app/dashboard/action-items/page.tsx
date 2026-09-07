@@ -347,9 +347,7 @@ export default function ActionTrackerPage() {
     const item = actionItems.find((i) => i.id === itemId);
     if (!item) return;
 
-    const updatedSubtasks = (item.subtasks || []).map((st) =>
-      st.id === subtaskId ? { ...st, completed } : st
-    );
+    const updatedSubtasks = (item.subtasks || []).map((st) => (st.id === subtaskId ? { ...st, completed } : st));
 
     try {
       await callService({
@@ -365,7 +363,9 @@ export default function ActionTrackerPage() {
   };
 
   // Create / Edit Handler
-  const handleSaveItem = async (itemData: Partial<ActionItem> & { meetingId: string; subtasks?: any[]; dependsOn?: string[] }) => {
+  const handleSaveItem = async (
+    itemData: Partial<ActionItem> & { meetingId: string; subtasks?: any[]; dependsOn?: string[] }
+  ) => {
     try {
       await saveActionItemMutation.mutateAsync(itemData);
       setIsModalOpen(false);

@@ -55,13 +55,7 @@ export class AuditRepository {
 
     // Run query and total count
     const [logs, countResult] = await Promise.all([
-      db
-        .select()
-        .from(requestLogs)
-        .where(whereClause)
-        .orderBy(desc(requestLogs.createdAt))
-        .limit(limit)
-        .offset(offset),
+      db.select().from(requestLogs).where(whereClause).orderBy(desc(requestLogs.createdAt)).limit(limit).offset(offset),
       db
         .select({ count: sql<number>`count(*)::int` })
         .from(requestLogs)

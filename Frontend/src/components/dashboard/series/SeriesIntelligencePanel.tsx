@@ -82,11 +82,7 @@ function SectionCard({
           </span>
           <span className="font-bold text-sm text-zinc-900 dark:text-zinc-50">{title}</span>
         </div>
-        {open ? (
-          <ChevronUp className="w-4 h-4 text-zinc-400" />
-        ) : (
-          <ChevronDown className="w-4 h-4 text-zinc-400" />
-        )}
+        {open ? <ChevronUp className="w-4 h-4 text-zinc-400" /> : <ChevronDown className="w-4 h-4 text-zinc-400" />}
       </button>
       <AnimatePresence initial={false}>
         {open && (
@@ -132,11 +128,7 @@ export function SeriesIntelligencePanel({ intelligence }: SeriesIntelligencePane
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={intelligence.sentimentTrend} margin={{ top: 4, right: 10, left: -20, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e4e4e7" />
-                <XAxis
-                  dataKey="occurrence"
-                  tickFormatter={(v) => `#${v}`}
-                  tick={{ fontSize: 11, fill: "#71717a" }}
-                />
+                <XAxis dataKey="occurrence" tickFormatter={(v) => `#${v}`} tick={{ fontSize: 11, fill: "#71717a" }} />
                 <YAxis domain={[0, 100]} tick={{ fontSize: 11, fill: "#71717a" }} />
                 <Tooltip
                   formatter={(value: any, name: any, props: any) => [

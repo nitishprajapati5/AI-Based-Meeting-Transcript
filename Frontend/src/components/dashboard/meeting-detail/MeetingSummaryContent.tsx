@@ -109,9 +109,7 @@ export function MeetingSummaryContent({ summaryData, isGenerating, onGenerateSum
           <h5 className="text-xs font-semibold flex items-center gap-1.5">
             <Target className="h-4 w-4 text-amber-600 dark:text-amber-400" /> Purpose & Overview
           </h5>
-          <p className="text-xs sm:text-sm leading-relaxed font-sans opacity-90">
-            {stripHtml(summaryData.purpose)}
-          </p>
+          <p className="text-xs sm:text-sm leading-relaxed font-sans opacity-90">{stripHtml(summaryData.purpose)}</p>
         </div>
       )}
 
@@ -123,7 +121,10 @@ export function MeetingSummaryContent({ summaryData, isGenerating, onGenerateSum
           </h5>
           <ul className="space-y-2 pl-1 text-xs sm:text-sm text-muted-foreground font-sans">
             {summaryData.discussionPoints.map((point, index) => (
-              <li key={index} className="flex items-start gap-2.5 pb-1 border-b border-border/40 last:border-0 last:pb-0">
+              <li
+                key={index}
+                className="flex items-start gap-2.5 pb-1 border-b border-border/40 last:border-0 last:pb-0"
+              >
                 <span className="h-1.5 w-1.5 rounded-full bg-blue-500 shrink-0 mt-1.5" />
                 <span className="leading-relaxed">{stripHtml(point)}</span>
               </li>
@@ -140,7 +141,10 @@ export function MeetingSummaryContent({ summaryData, isGenerating, onGenerateSum
           </h5>
           <ul className="space-y-2 pl-1 text-xs sm:text-sm text-muted-foreground font-sans">
             {summaryData.majorOutcomes.map((outcome, index) => (
-              <li key={index} className="flex items-start gap-2.5 pb-1 border-b border-border/40 last:border-0 last:pb-0">
+              <li
+                key={index}
+                className="flex items-start gap-2.5 pb-1 border-b border-border/40 last:border-0 last:pb-0"
+              >
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 shrink-0 mt-1.5" />
                 <span className="leading-relaxed">{stripHtml(outcome)}</span>
               </li>
@@ -157,7 +161,10 @@ export function MeetingSummaryContent({ summaryData, isGenerating, onGenerateSum
           </h5>
           <ul className="space-y-2.5 pl-1 text-xs sm:text-sm text-muted-foreground font-sans">
             {summaryData.keyDecisions.map((kd, index) => (
-              <li key={index} className="flex items-start gap-2.5 pb-2 border-b border-border/40 last:border-0 last:pb-0">
+              <li
+                key={index}
+                className="flex items-start gap-2.5 pb-2 border-b border-border/40 last:border-0 last:pb-0"
+              >
                 <span className="h-1.5 w-1.5 rounded-full bg-indigo-500 shrink-0 mt-1.5" />
                 <div className="flex-1 space-y-0.5">
                   <div className="flex items-center gap-2 flex-wrap">

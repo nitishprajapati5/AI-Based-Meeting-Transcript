@@ -87,7 +87,6 @@ import {
   removeMeetingFromSeriesSchema,
 } from "../utils/validation";
 
-
 export interface ServiceDefinition {
   serviceId: string;
   handler: any;

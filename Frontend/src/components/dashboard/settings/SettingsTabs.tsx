@@ -19,7 +19,6 @@ const tabs: { id: SettingsTabType; label: string; icon: React.ComponentType<{ cl
   { id: "Change Password", label: "Change Password", icon: LockKeyholeIcon },
 ];
 
-
 export function SettingsTabs({ activeTab, setActiveTab }: SettingsTabsProps) {
   return (
     <div className="w-full overflow-x-auto scrollbar-none pb-1 flex justify-start md:justify-center">
@@ -32,11 +31,9 @@ export function SettingsTabs({ activeTab, setActiveTab }: SettingsTabsProps) {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`relative flex items-center gap-2 px-4 py-2 text-xs font-semibold rounded-xl transition-colors cursor-pointer z-10 ${isActive
-                ? "text-brand font-bold"
-                : "text-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-200"
-                }`}
-
+              className={`relative flex items-center gap-2 px-4 py-2 text-xs font-semibold rounded-xl transition-colors cursor-pointer z-10 ${
+                isActive ? "text-brand font-bold" : "text-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-200"
+              }`}
             >
               {isActive && (
                 <motion.div

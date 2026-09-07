@@ -132,7 +132,8 @@ export function SeriesTimeline({ meetings }: SeriesTimelineProps) {
                   )}
                   {actionItemCount > 0 && (
                     <span className="flex items-center gap-1">
-                      <CheckSquare className="w-3 h-3" /> {actionItemCount} action item{actionItemCount !== 1 ? "s" : ""}
+                      <CheckSquare className="w-3 h-3" /> {actionItemCount} action item
+                      {actionItemCount !== 1 ? "s" : ""}
                     </span>
                   )}
                   {!meeting.summary && !meeting.transcript && (

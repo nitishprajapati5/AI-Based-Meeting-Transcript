@@ -133,10 +133,7 @@ export default function SeriesPage() {
               key={stat.label}
               className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl px-5 py-4 flex items-center gap-3 shadow-xs"
             >
-              <span
-                className="p-2 rounded-xl"
-                style={{ backgroundColor: `${stat.color}15`, color: stat.color }}
-              >
+              <span className="p-2 rounded-xl" style={{ backgroundColor: `${stat.color}15`, color: stat.color }}>
                 {stat.icon}
               </span>
               <div>

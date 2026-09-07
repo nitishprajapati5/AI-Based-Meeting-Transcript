@@ -5,8 +5,16 @@ import { X, Repeat2, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const COLORS = [
-  "#6366f1", "#3b82f6", "#10b981", "#f59e0b", "#ef4444",
-  "#8b5cf6", "#ec4899", "#14b8a6", "#f97316", "#84cc16",
+  "#6366f1",
+  "#3b82f6",
+  "#10b981",
+  "#f59e0b",
+  "#ef4444",
+  "#8b5cf6",
+  "#ec4899",
+  "#14b8a6",
+  "#f97316",
+  "#84cc16",
 ];
 
 const RECURRENCE_LABELS = ["Daily", "Weekly", "Bi-weekly", "Monthly", "Quarterly", "Ad-hoc"];
@@ -14,12 +22,7 @@ const RECURRENCE_LABELS = ["Daily", "Weekly", "Bi-weekly", "Monthly", "Quarterly
 interface CreateSeriesModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (data: {
-    title: string;
-    description?: string;
-    color: string;
-    recurrenceLabel: string;
-  }) => Promise<void>;
+  onSave: (data: { title: string; description?: string; color: string; recurrenceLabel: string }) => Promise<void>;
   initialData?: {
     id?: string;
     title?: string;
@@ -115,9 +118,7 @@ export function CreateSeriesModal({ isOpen, onClose, onSave, initialData, isSavi
 
                 {/* Recurrence */}
                 <div>
-                  <label className="block text-xs font-bold text-zinc-700 dark:text-zinc-300 mb-1.5">
-                    Recurrence
-                  </label>
+                  <label className="block text-xs font-bold text-zinc-700 dark:text-zinc-300 mb-1.5">Recurrence</label>
                   <div className="flex flex-wrap gap-2">
                     {RECURRENCE_LABELS.map((label) => (
                       <button
@@ -138,9 +139,7 @@ export function CreateSeriesModal({ isOpen, onClose, onSave, initialData, isSavi
 
                 {/* Color */}
                 <div>
-                  <label className="block text-xs font-bold text-zinc-700 dark:text-zinc-300 mb-1.5">
-                    Color
-                  </label>
+                  <label className="block text-xs font-bold text-zinc-700 dark:text-zinc-300 mb-1.5">Color</label>
                   <div className="flex items-center gap-2.5 flex-wrap">
                     {COLORS.map((c) => (
                       <button
@@ -148,7 +147,9 @@ export function CreateSeriesModal({ isOpen, onClose, onSave, initialData, isSavi
                         type="button"
                         onClick={() => setColor(c)}
                         className={`w-7 h-7 rounded-full transition-all cursor-pointer ${
-                          color === c ? "ring-2 ring-offset-2 ring-zinc-400 dark:ring-offset-zinc-950 scale-110" : "hover:scale-105"
+                          color === c
+                            ? "ring-2 ring-offset-2 ring-zinc-400 dark:ring-offset-zinc-950 scale-110"
+                            : "hover:scale-105"
                         }`}
                         style={{ backgroundColor: c }}
                       />
