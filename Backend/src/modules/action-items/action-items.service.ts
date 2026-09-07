@@ -15,6 +15,8 @@ export class ActionItemsService {
     dueDate?: string;
     priority?: string;
     status?: string;
+    subtasks?: any[];
+    dependsOn?: string[];
     meetingId: string;
     userEmail?: string;
   }) {
@@ -40,6 +42,8 @@ export class ActionItemsService {
       dueDate: input.dueDate || "Not specified",
       priority: input.priority || "Medium",
       status: input.status || "Pending",
+      subtasks: input.subtasks || [],
+      dependsOn: input.dependsOn || [],
       createdAt: new Date(),
       updatedAt: new Date(),
     });
@@ -77,6 +81,8 @@ export class ActionItemsService {
       ...(updates.dueDate !== undefined ? { dueDate: updates.dueDate || "Not specified" } : {}),
       ...(updates.priority ? { priority: updates.priority } : {}),
       ...(updates.status ? { status: updates.status } : {}),
+      ...(updates.subtasks !== undefined ? { subtasks: updates.subtasks } : {}),
+      ...(updates.dependsOn !== undefined ? { dependsOn: updates.dependsOn } : {}),
     });
 
     if (updated) {

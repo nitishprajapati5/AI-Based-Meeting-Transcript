@@ -54,6 +54,26 @@ export const SERVICE_IDS = {
     RESET_PASSWORD_WITH_TOKEN: "auth.resetPasswordWithToken",
     USERS: "auth.users",
   },
+  AUDIT: {
+    LOGS: "audit.logs",
+    STATS: "audit.stats",
+  },
+  CHAT: {
+    GLOBAL: "chat.global",
+    MEMORY_SYNC: "memory.sync",
+    SESSIONS_LIST: "chat.sessions.list",
+    SESSIONS_GET: "chat.sessions.get",
+  },
+  SERIES: {
+    CREATE: "series.create",
+    LIST: "series.list",
+    GET: "series.get",
+    UPDATE: "series.update",
+    DELETE: "series.delete",
+    ASSIGN_MEETING: "series.assignMeeting",
+    REMOVE_MEETING: "series.removeMeeting",
+    INTELLIGENCE: "series.intelligence",
+  },
 } as const;
 
 export type SERVICE_IDS_TYPE = typeof SERVICE_IDS;
@@ -65,4 +85,9 @@ export type ServiceId =
   | (typeof SERVICE_IDS.SETTINGS)[keyof typeof SERVICE_IDS.SETTINGS]
   | (typeof SERVICE_IDS.NOTIFICATIONS)[keyof typeof SERVICE_IDS.NOTIFICATIONS]
   | (typeof SERVICE_IDS.JOBS)[keyof typeof SERVICE_IDS.JOBS]
-  | (typeof SERVICE_IDS.AUTH)[keyof typeof SERVICE_IDS.AUTH];
+  | (typeof SERVICE_IDS.AUTH)[keyof typeof SERVICE_IDS.AUTH]
+  | (typeof SERVICE_IDS.AUDIT)[keyof typeof SERVICE_IDS.AUDIT]
+  | (typeof SERVICE_IDS.CHAT)[keyof typeof SERVICE_IDS.CHAT]
+  | (typeof SERVICE_IDS.SERIES)[keyof typeof SERVICE_IDS.SERIES];
+
+

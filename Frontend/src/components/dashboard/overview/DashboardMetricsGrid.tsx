@@ -76,25 +76,25 @@ export function DashboardMetricsGrid({ metrics, isLoading }: DashboardMetricsGri
       {metricItems.map((item, idx) => {
         const Icon = item.icon;
         return (
-          <motion.div key={idx} variants={cardVariants} whileHover={{ y: -4, transition: { duration: 0.2 } }}>
-            <Card className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-xs transition-colors">
+          <motion.div key={idx} variants={cardVariants} whileHover={{ y: -3, transition: { duration: 0.15 } }}>
+            <Card className="paper-card rounded-xl border border-border shadow-xs transition-all">
               <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-                <CardTitle className="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                <CardTitle className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                   {item.title}
                 </CardTitle>
-                <div className="p-2 rounded-xl bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100">
+                <div className="p-2 rounded-lg bg-muted text-foreground border border-border">
                   <Icon className="h-4 w-4" />
                 </div>
               </CardHeader>
               <CardContent>
                 {isLoading ? (
-                  <Skeleton className="h-8 w-20 rounded-lg my-1" />
+                  <Skeleton className="h-8 w-20 rounded-md my-1" />
                 ) : (
-                  <div className="text-3xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-100">
+                  <div className="text-3xl font-extrabold tracking-tight text-foreground">
                     {item.value}
                   </div>
                 )}
-                <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-1.5 font-medium">{item.subtitle}</p>
+                <p className="text-[11px] text-muted-foreground mt-1.5 font-medium">{item.subtitle}</p>
               </CardContent>
             </Card>
           </motion.div>

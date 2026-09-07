@@ -91,6 +91,10 @@ const sampleBodies: Record<string, { payload?: any; params?: any; query?: any }>
   "jobs.get": {
     params: { id: "job-uuid-12345" },
   },
+  "audit.stats": {},
+  "audit.logs": {
+    query: { page: 1, limit: 20, statusGroup: "all" },
+  },
 };
 
 export function generateDocs(): void {
@@ -104,6 +108,7 @@ export function generateDocs(): void {
       settings: [],
       notifications: [],
       jobs: [],
+      audit: [],
     };
 
     const registryEntries = Object.entries(serviceRegistry).sort((a, b) => a[0].localeCompare(b[0]));
@@ -149,7 +154,7 @@ export function generateDocs(): void {
       }
     }
 
-    const categoriesOrder = ["auth", "meetings", "actionItems", "dashboard", "settings", "notifications", "jobs"];
+    const categoriesOrder = ["auth", "meetings", "actionItems", "dashboard", "settings", "notifications", "jobs", "audit"];
     const foldersMap: Record<string, string> = {
       auth: "Authentication",
       meetings: "Meetings",
@@ -158,7 +163,9 @@ export function generateDocs(): void {
       settings: "Settings",
       notifications: "Notifications",
       jobs: "Jobs",
+      audit: "Audit & Security",
     };
+
 
     const postmanCollection = {
       info: {

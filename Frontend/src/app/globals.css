@@ -2,7 +2,9 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:where(.dark, .dark *));
+
+
 
 @theme inline {
   --color-background: var(--background);
@@ -45,6 +47,13 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-paper: var(--paper);
+  --color-paper-foreground: var(--paper-foreground);
+  --color-paper-muted: var(--paper-muted);
+  --color-paper-border: var(--paper-border);
+  --color-paper-line: var(--paper-line);
+  --color-paper-margin: var(--paper-margin);
+  --color-paper-grid: var(--paper-grid);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -57,6 +66,13 @@
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.09 0 0);
+  --paper: #fdfdfc;
+  --paper-foreground: #1c1917;
+  --paper-muted: #f7f6f2;
+  --paper-border: #e4e2da;
+  --paper-line: rgba(55, 65, 81, 0.08);
+  --paper-margin: rgba(239, 68, 68, 0.35);
+  --paper-grid: rgba(55, 65, 81, 0.06);
   --brand: oklch(0.09 0 0);
   --brand-foreground: oklch(1 0 0);
   --brand-subtle: oklch(0.96 0 0);
@@ -99,6 +115,13 @@
 .dark {
   --background: oklch(0.05 0 0);
   --foreground: oklch(0.98 0 0);
+  --paper: #18181b;
+  --paper-foreground: #f4f4f5;
+  --paper-muted: #1f1f23;
+  --paper-border: #2e2e33;
+  --paper-line: rgba(255, 255, 255, 0.06);
+  --paper-margin: rgba(248, 113, 113, 0.3);
+  --paper-grid: rgba(255, 255, 255, 0.05);
   --brand: oklch(0.98 0 0);
   --brand-foreground: oklch(0.05 0 0);
   --brand-subtle: oklch(0.12 0 0);
@@ -258,4 +281,186 @@
 .scrollbar-hide {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+
+/* =========================================================
+   Paper & Notebook Styling System
+   ========================================================= */
+
+/* Paper Sheet / Card Base */
+.paper-sheet {
+  background-color: var(--paper);
+  color: var(--paper-foreground);
+  border: 1px solid var(--paper-border);
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+}
+
+.paper-card {
+  background-color: var(--paper);
+  color: var(--paper-foreground);
+  border: 1px solid var(--paper-border);
+  border-radius: 0.75rem;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.03);
+}
+
+.paper-card:hover {
+  border-color: var(--ring);
+  box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.06);
+}
+
+.paper-border {
+  border: 1px solid var(--paper-border);
+}
+
+.paper-border-dashed {
+  border: 1.5px dashed var(--paper-border);
+}
+
+/* Notebook Ruled Paper Effect (Lined Paper) */
+.notebook-ruled {
+  background-color: var(--paper);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 27px,
+    var(--paper-line) 28px
+  );
+  background-size: 100% 28px;
+  line-height: 28px;
+}
+
+/* Notebook Grid Paper Effect (Graph Paper) */
+.notebook-grid {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(to right, var(--paper-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--paper-grid) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Notebook Dot Grid Paper Effect (Bullet Journal) */
+.notebook-dotgrid {
+  background-color: var(--paper);
+  background-image: radial-gradient(var(--paper-grid) 1.2px, transparent 1.2px);
+  background-size: 18px 18px;
+}
+
+/* Notebook Page with Left-hand Margin */
+.notebook-page {
+  position: relative;
+  background-color: var(--paper);
+  color: var(--paper-foreground);
+  border: 1px solid var(--paper-border);
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+}
+
+.notebook-page::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 3.5rem;
+  width: 1px;
+  background-color: var(--paper-margin);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Sticky Memo Notes */
+.memo-note {
+  position: relative;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.05);
+}
+
+.memo-note:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px -2px rgba(0, 0, 0, 0.08);
+}
+
+.memo-amber {
+  background-color: #fefce8;
+  border-color: #fef08a;
+  color: #713f12;
+}
+.dark .memo-amber {
+  background-color: #26200c;
+  border-color: #713f12;
+  color: #fef08a;
+}
+
+.memo-blue {
+  background-color: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1e3a8a;
+}
+.dark .memo-blue {
+  background-color: #0b192e;
+  border-color: #1e3a8a;
+  color: #bfdbfe;
+}
+
+.memo-green {
+  background-color: #f0fdf4;
+  border-color: #bbf7d0;
+  color: #14532d;
+}
+.dark .memo-green {
+  background-color: #0a2315;
+  border-color: #14532d;
+  color: #bbf7d0;
+}
+
+.memo-rose {
+  background-color: #fff1f2;
+  border-color: #fecdd3;
+  color: #881337;
+}
+.dark .memo-rose {
+  background-color: #240a12;
+  border-color: #881337;
+  color: #fecdd3;
+}
+
+/* Paper Badge / Label Stamp */
+.paper-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.15rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 0.375rem;
+  background-color: var(--paper-muted);
+  color: var(--paper-foreground);
+  border: 1px solid var(--paper-border);
+}
+
+/* Notebook Tape Strip Accent */
+.paper-tape {
+  position: relative;
+}
+
+.paper-tape::after {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 14px;
+  background-color: rgba(220, 215, 195, 0.45);
+  border: 1px dashed rgba(180, 175, 155, 0.4);
+  pointer-events: none;
+  border-radius: 1px;
+}
+.dark .paper-tape::after {
+  background-color: rgba(100, 100, 110, 0.35);
+  border: 1px dashed rgba(140, 140, 150, 0.3);
 }

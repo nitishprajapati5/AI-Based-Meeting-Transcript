@@ -23,6 +23,7 @@ import {
   Delete,
   CheckCircle2,
   MessageSquare,
+  Repeat2,
 } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -35,6 +36,7 @@ const navItems = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { label: "Meetings", href: "/dashboard/meetings", icon: Calendar },
   { label: "Action Tracker", href: "/dashboard/action-items", icon: CheckSquare },
+  { label: "Series", href: "/dashboard/series", icon: Repeat2 },
   { label: "Settings", href: "/dashboard/settings", icon: Settings },
   { label: "Archive", href: "/dashboard/archive", icon: Archive },
   { label: "Trash", href: "/dashboard/trash", icon: Delete },
@@ -165,11 +167,11 @@ export function Sidebar() {
       .slice(0, 2) || "NP";
 
   const sidebarContent = (
-    <div className="flex h-full flex-col justify-between p-6 overflow-hidden bg-white dark:bg-zinc-950">
+    <div className="flex h-full flex-col justify-between p-6 overflow-hidden dark:bg-zinc-950">
       <div className="flex flex-col flex-1 min-h-0 overflow-y-auto pr-1">
         <div className="flex items-center justify-between mb-8 shrink-0">
           <Link href="/dashboard" className="flex items-center gap-3 group">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 shadow-xs">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-zinc-900 text-white shadow-xs">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -182,7 +184,7 @@ export function Sidebar() {
               </svg>
             </div>
             <div>
-              <h2 className="font-bold text-base leading-none tracking-tight text-zinc-900 dark:text-zinc-50">
+              <h2 className="font-bold text-base leading-none tracking-tight text-zinc-900">
                 Syncra
               </h2>
               <span className="text-[11px] font-medium text-zinc-500">AI Assistant</span>
@@ -191,7 +193,7 @@ export function Sidebar() {
           <div className="flex items-center gap-1.5">
             <button
               onClick={() => window.dispatchEvent(new CustomEvent("open-shortcuts-dialog"))}
-              className="p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors cursor-pointer"
+              className="p-1.5 rounded-lg border border-zinc-200 text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors cursor-pointer"
               title="Keyboard Shortcuts (?)"
             >
               <Keyboard className="h-4 w-4" />
@@ -213,11 +215,10 @@ export function Sidebar() {
             return (
               <Link key={item.label} href={item.href} className="relative block">
                 <div
-                  className={`flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium transition-all ${
-                    isActive
-                      ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-950 font-semibold"
-                      : "text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900"
-                  }`}
+                  className={`flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium transition-all ${isActive
+                    ? "bg-zinc-900 text-white font-semibold"
+                    : "text-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900"
+                    }`}
                 >
                   <Icon className="h-4.5 w-4.5" />
                   <span>{item.label}</span>
@@ -228,13 +229,13 @@ export function Sidebar() {
 
           {/* Notifications Nav Item */}
           <button onClick={() => setIsNotificationsOpen(true)} className="w-full relative block text-left">
-            <div className="flex items-center justify-between rounded-xl px-3.5 py-2.5 text-sm font-medium transition-colors text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900 cursor-pointer">
+            <div className="flex items-center justify-between rounded-xl px-3.5 py-2.5 text-sm font-medium transition-colors text-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900 cursor-pointer">
               <div className="flex items-center gap-3">
                 <Bell className="h-4.5 w-4.5" />
                 <span>Notifications</span>
               </div>
               {unreadCount > 0 && (
-                <span className="flex h-4.5 w-4.5 items-center justify-center rounded-full bg-zinc-900 text-[10px] font-bold text-white dark:bg-zinc-100 dark:text-zinc-950">
+                <span className="flex h-4.5 w-4.5 items-center justify-center rounded-full bg-zinc-900 text-[10px] font-bold text-white">
                   {unreadCount}
                 </span>
               )}
@@ -243,21 +244,21 @@ export function Sidebar() {
         </nav>
       </div>
 
-      <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-between shrink-0">
+      <div className="pt-4 border-t border-zinc-200 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
-          <Avatar className="h-8 w-8 border border-zinc-200 dark:border-zinc-800">
+          <Avatar className="h-8 w-8 border border-zinc-200">
             <AvatarImage src="" />
-            <AvatarFallback className="bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-950 text-xs font-bold">
+            <AvatarFallback className="bg-zinc-900 text-white text-xs font-bold">
               {userInitials}
             </AvatarFallback>
           </Avatar>
           <div className="text-xs overflow-hidden">
-            <p className="font-semibold text-zinc-900 dark:text-zinc-100 truncate max-w-[110px]">{userName}</p>
-            <p className="text-zinc-500 truncate max-w-[110px]" title={userEmail}>
+            <p className="font-semibold dark:text-zinc-100 truncate max-w-27.5">{userName}</p>
+            <p className="text-zinc-500 truncate max-w-27.5" title={userEmail}>
               {userEmail}
             </p>
             <p
-              className="text-[10px] font-semibold text-zinc-400 dark:text-zinc-500 mt-0.5"
+              className="text-[10px] font-semibold text-zinc-400 mt-0.5"
               title={`Frontend Version: v${pkg.version}`}
             >
               v{pkg.version}
@@ -279,21 +280,21 @@ export function Sidebar() {
   return (
     <>
       {/* Mobile Header Bar */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-30 flex items-center justify-between px-4 py-3 bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-800">
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-30 flex items-center justify-between px-4 py-3 bg-white border-b border-zinc-200">
         <div className="flex items-center gap-2">
           <button
             onClick={() => setIsMobileOpen(true)}
-            className="p-2 rounded-lg text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+            className="p-2 rounded-lg text-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-800"
             aria-label="Open sidebar"
           >
             <Menu className="h-5 w-5" />
           </button>
-          <span className="font-bold text-base text-zinc-900 dark:text-zinc-100">Syncra</span>
+          <span className="font-bold text-base text-zinc-900">Syncra</span>
         </div>
         <div className="flex items-center gap-2">
           <button
             onClick={() => window.dispatchEvent(new CustomEvent("toggle-chatbot"))}
-            className="p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg border border-zinc-200 text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors cursor-pointer"
             title="AI Co-Pilot Chatbot"
           >
             <MessageSquare className="h-4 w-4 text-indigo-500" />
@@ -301,19 +302,19 @@ export function Sidebar() {
           <AppearanceDropdown />
           <button
             onClick={() => setIsNotificationsOpen(true)}
-            className="relative p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors cursor-pointer"
+            className="relative p-1.5 rounded-lg border border-zinc-200 text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors cursor-pointer"
             title="Notifications Center"
           >
             <Bell className="h-4 w-4" />
             {unreadCount > 0 && (
-              <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-zinc-900 text-[10px] font-bold text-white dark:bg-zinc-100 dark:text-zinc-950">
+              <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-zinc-900 text-[10px] font-bold text-white">
                 {unreadCount > 9 ? "9+" : unreadCount}
               </span>
             )}
           </button>
           <button
             onClick={() => window.dispatchEvent(new CustomEvent("open-shortcuts-dialog"))}
-            className="p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg border border-zinc-200 text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors cursor-pointer"
             title="Keyboard Shortcuts (?)"
           >
             <Keyboard className="h-4 w-4" />
@@ -336,15 +337,14 @@ export function Sidebar() {
 
       {/* Mobile Drawer Sidebar */}
       <aside
-        className={`lg:hidden fixed top-0 bottom-0 left-0 z-50 w-64 bg-white dark:bg-zinc-950 border-r border-zinc-200 dark:border-zinc-800 transform transition-transform duration-300 ease-out ${
-          isMobileOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`lg:hidden fixed top-0 bottom-0 left-0 z-50 w-64 bg-white border-r border-zinc-200 transform transition-transform duration-300 ease-out ${isMobileOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
       >
         {sidebarContent}
       </aside>
 
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex w-64 border-r border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex-col shrink-0 h-screen sticky top-0 overflow-hidden">
+      <aside className="hidden lg:flex w-64 border-r border-zinc-200 bg-white flex-col shrink-0 h-screen sticky top-0 overflow-hidden">
         {sidebarContent}
       </aside>
 
@@ -364,18 +364,18 @@ export function Sidebar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed right-0 top-0 bottom-0 z-55 w-full max-w-md bg-white dark:bg-zinc-950 border-l border-zinc-200 dark:border-zinc-800 shadow-xl flex flex-col"
+              className="fixed right-0 top-0 bottom-0 z-55 w-full max-w-md bg-white border-l border-zinc-200 shadow-xl flex flex-col"
             >
               {/* Drawer Header */}
-              <div className="p-6 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between bg-zinc-50 dark:bg-zinc-900/50">
+              <div className="p-6 border-b border-zinc-200 flex items-center justify-between bg-zinc-50">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-xl bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100">
+                  <div className="p-2 rounded-xl bg-zinc-100 text-zinc-900">
                     <Bell className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-base text-zinc-900 dark:text-zinc-50">Notifications</h3>
+                    <h3 className="font-bold text-base text-zinc-900">Notifications</h3>
                     {unreadCount > 0 ? (
-                      <p className="text-[11px] font-semibold text-zinc-600 dark:text-zinc-400 mt-0.5">
+                      <p className="text-[11px] font-semibold text-zinc-600 mt-0.5">
                         {unreadCount} unread notification{unreadCount !== 1 ? "s" : ""}
                       </p>
                     ) : (
@@ -385,7 +385,7 @@ export function Sidebar() {
                 </div>
                 <button
                   onClick={() => setIsNotificationsOpen(false)}
-                  className="p-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors cursor-pointer"
+                  className="p-1.5 rounded-xl border border-zinc-200 text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors cursor-pointer"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -393,10 +393,10 @@ export function Sidebar() {
 
               {/* Feed Actions */}
               {notifications.length > 0 && (
-                <div className="px-6 py-3 border-b border-zinc-100 dark:border-zinc-900 bg-zinc-50 dark:bg-zinc-900/30 flex items-center justify-between text-xs font-semibold">
+                <div className="px-6 py-3 border-b border-zinc-100 bg-zinc-50 flex items-center justify-between text-xs font-semibold">
                   <button
                     onClick={handleMarkAllRead}
-                    className="text-zinc-900 dark:text-zinc-100 hover:underline flex items-center gap-1 cursor-pointer"
+                    className="text-zinc-900 hover:underline flex items-center gap-1 cursor-pointer"
                   >
                     <Check className="w-3.5 h-3.5" /> Read All
                   </button>
@@ -418,45 +418,44 @@ export function Sidebar() {
                   </div>
                 ) : notifications.length === 0 ? (
                   <div className="flex flex-col items-center justify-center py-20 text-center text-zinc-400 space-y-2">
-                    <CheckCircle2 className="h-8 w-8 text-zinc-300 dark:text-zinc-700" />
+                    <CheckCircle2 className="h-8 w-8 text-zinc-300" />
                     <div>
-                      <p className="text-sm font-bold text-zinc-800 dark:text-zinc-200">No notifications</p>
-                      <p className="text-xs text-zinc-400 dark:text-zinc-500 mt-1">You have no alerts at this time.</p>
+                      <p className="text-sm font-bold text-zinc-800">No notifications</p>
+                      <p className="text-xs text-zinc-400 mt-1">You have no alerts at this time.</p>
                     </div>
                   </div>
                 ) : (
                   Object.entries(groupedNotifications).map(([dateKey, items]) => (
                     <div key={dateKey} className="space-y-3">
-                      <h4 className="text-[11px] font-extrabold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 pl-1">
+                      <h4 className="text-[11px] font-extrabold uppercase tracking-wider text-zinc-400 pl-1">
                         {dateKey}
                       </h4>
                       <div className="space-y-2.5">
                         {items.map((item) => (
                           <div
                             key={item.id}
-                            className={`p-4 rounded-2xl border transition-all ${
-                              item.isRead
-                                ? "bg-white dark:bg-zinc-950 border-zinc-200 dark:border-zinc-800 opacity-70"
-                                : "bg-zinc-50 dark:bg-zinc-900 border-zinc-300 dark:border-zinc-700 font-semibold"
-                            }`}
+                            className={`p-4 rounded-2xl border transition-all ${item.isRead
+                              ? "bg-white border-zinc-200 opacity-70"
+                              : "bg-zinc-50 border-zinc-300 font-semibold"
+                              }`}
                           >
                             <div className="flex items-start gap-3">
-                              <div className="p-2 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 mt-0.5">
+                              <div className="p-2 rounded-xl bg-zinc-100 border border-zinc-200 text-zinc-900 mt-0.5">
                                 <Bell className="h-4 w-4" />
                               </div>
                               <div className="flex-1 space-y-1 min-w-0">
                                 <div className="flex items-center justify-between gap-2">
-                                  <span className="font-bold text-xs text-zinc-900 dark:text-zinc-100 truncate">
+                                  <span className="font-bold text-xs text-zinc-900 truncate">
                                     {item.title}
                                   </span>
-                                  <span className="text-[9px] text-zinc-400 dark:text-zinc-500 shrink-0 font-medium">
+                                  <span className="text-[9px] text-zinc-400 shrink-0 font-medium">
                                     {new Date(item.createdAt).toLocaleTimeString([], {
                                       hour: "2-digit",
                                       minute: "2-digit",
                                     })}
                                   </span>
                                 </div>
-                                <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+                                <p className="text-xs text-zinc-600 leading-relaxed font-medium">
                                   {item.message}
                                 </p>
                               </div>

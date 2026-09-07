@@ -1,6 +1,12 @@
-import { pgTable, text, timestamp, varchar, index, boolean } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, varchar, index, boolean, jsonb } from "drizzle-orm/pg-core";
 import { meetings } from "./meetings.schema";
 import { users } from "./users.schema";
+
+export interface SubTaskRecord {
+  id: string;
+  title: string;
+  completed: boolean;
+}
 
 /**
  * Action Items Table
@@ -21,6 +27,8 @@ export const actionItems = pgTable(
     dueDate: text("due_date").default("Not specified"),
     priority: text("priority").default("Medium"),
     status: text("status").default("Pending"),
+    subtasks: jsonb("subtasks").$type<SubTaskRecord[]>().default([]),
+    dependsOn: jsonb("depends_on").$type<string[]>().default([]),
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow(),
     isArchived: boolean("is_archived").notNull().default(false),

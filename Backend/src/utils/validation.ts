@@ -305,6 +305,15 @@ export const cloneMeetingSchema = z.object({
   meeting: meetingSchema,
 });
 
+export const auditLogQuerySchema = z.object({
+  page: z.coerce.number().min(1).default(1),
+  limit: z.coerce.number().min(1).max(100).default(20),
+  statusGroup: z.enum(["all", "2xx", "3xx", "4xx", "5xx", "errors"]).optional().default("all"),
+  method: z.string().optional(),
+  search: z.string().optional(),
+  serviceId: z.string().optional(),
+});
+
 // Type exports for TypeScript
 export type RegisterInput = z.infer<typeof registerSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
@@ -318,3 +327,44 @@ export type ChatValidationInput = z.infer<typeof chatValidationSchema>;
 export type MeetingInput = z.infer<typeof meetingSchema>;
 export type MeetingSummaryInput = z.infer<typeof meetingSummarySchema>;
 export type CloneMeetingInput = z.infer<typeof cloneMeetingSchema>;
+export type AuditLogQueryInput = z.infer<typeof auditLogQuerySchema>;
+
+// Series Schemas
+export const createSeriesSchema = z.object({
+  title: z.string().min(2, "Title must be at least 2 characters").max(200).trim(),
+  description: z.string().max(1000).optional(),
+  color: z
+    .string()
+    .regex(/^#[0-9A-Fa-f]{6}$/, "Color must be a valid hex color (e.g. #6366f1)")
+    .optional(),
+  recurrenceLabel: z
+    .enum(["Daily", "Weekly", "Bi-weekly", "Monthly", "Quarterly", "Ad-hoc"])
+    .optional()
+    .default("Weekly"),
+});
+
+export const updateSeriesSchema = z.object({
+  title: z.string().min(2).max(200).trim().optional(),
+  description: z.string().max(1000).optional(),
+  color: z
+    .string()
+    .regex(/^#[0-9A-Fa-f]{6}$/)
+    .optional(),
+  recurrenceLabel: z.enum(["Daily", "Weekly", "Bi-weekly", "Monthly", "Quarterly", "Ad-hoc"]).optional(),
+});
+
+export const assignMeetingToSeriesSchema = z.object({
+  meetingId: z.string().min(1, "meetingId is required"),
+  seriesId: z.string().min(1, "seriesId is required"),
+  occurrence: z.number().int().positive().optional(),
+});
+
+export const removeMeetingFromSeriesSchema = z.object({
+  meetingId: z.string().min(1, "meetingId is required"),
+});
+
+export type CreateSeriesInput = z.infer<typeof createSeriesSchema>;
+export type UpdateSeriesInput = z.infer<typeof updateSeriesSchema>;
+export type AssignMeetingToSeriesInput = z.infer<typeof assignMeetingToSeriesSchema>;
+
+

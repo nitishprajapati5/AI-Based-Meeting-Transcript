@@ -67,7 +67,26 @@ import {
   actionItemQuerySchema,
   forgotPassword,
   resetPasswordWithTokenSchema,
+  auditLogQuerySchema,
 } from "../utils/validation";
+import { getAuditStats, getAuditLogs } from "../modules/audit/audit.controller";
+import {
+  createSeries,
+  listSeries,
+  getSeriesById,
+  updateSeries,
+  deleteSeries,
+  assignMeetingToSeries,
+  removeMeetingFromSeries,
+  getSeriesIntelligence,
+} from "../modules/series/series.controller";
+import {
+  createSeriesSchema,
+  updateSeriesSchema,
+  assignMeetingToSeriesSchema,
+  removeMeetingFromSeriesSchema,
+} from "../utils/validation";
+
 
 export interface ServiceDefinition {
   serviceId: string;
@@ -352,5 +371,66 @@ export const serviceRegistry: Record<string, ServiceDefinition> = {
     serviceId: "memory.sync",
     handler: triggerUserMemorySync,
     requiresAuth: true,
+  },
+
+  // Audit & Security Log Services
+  "audit.stats": {
+    serviceId: "audit.stats",
+    handler: getAuditStats,
+    requiresAuth: true,
+  },
+  "audit.logs": {
+    serviceId: "audit.logs",
+    handler: getAuditLogs,
+    requiresAuth: true,
+    validation: { query: auditLogQuerySchema },
+  },
+  // Series Services
+  "series.create": {
+    serviceId: "series.create",
+    handler: createSeries,
+    requiresAuth: true,
+    validation: { body: createSeriesSchema },
+  },
+  "series.list": {
+    serviceId: "series.list",
+    handler: listSeries,
+    requiresAuth: true,
+  },
+  "series.get": {
+    serviceId: "series.get",
+    handler: getSeriesById,
+    requiresAuth: true,
+    validation: { params: idSchema },
+  },
+  "series.update": {
+    serviceId: "series.update",
+    handler: updateSeries,
+    requiresAuth: true,
+    validation: { params: idSchema, body: updateSeriesSchema },
+  },
+  "series.delete": {
+    serviceId: "series.delete",
+    handler: deleteSeries,
+    requiresAuth: true,
+    validation: { params: idSchema },
+  },
+  "series.assignMeeting": {
+    serviceId: "series.assignMeeting",
+    handler: assignMeetingToSeries,
+    requiresAuth: true,
+    validation: { body: assignMeetingToSeriesSchema },
+  },
+  "series.removeMeeting": {
+    serviceId: "series.removeMeeting",
+    handler: removeMeetingFromSeries,
+    requiresAuth: true,
+    validation: { body: removeMeetingFromSeriesSchema },
+  },
+  "series.intelligence": {
+    serviceId: "series.intelligence",
+    handler: getSeriesIntelligence,
+    requiresAuth: true,
+    validation: { params: idSchema },
   },
 };

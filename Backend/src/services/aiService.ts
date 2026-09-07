@@ -801,3 +801,220 @@ export async function queryMeetingRAG(
     retrievedSources,
   };
 }
+
+// ============================================================
+// Cross-Meeting Intelligence Types & Schema
+// ============================================================
+
+export interface CrossMeetingIntelligence {
+  recurringThemes: string[];
+  unresolvedBlockers: { issue: string; firstSeenOccurrence: number }[];
+  actionItemCarryOver: { task: string; owner: string; openSinceOccurrence: number }[];
+  sentimentTrend: { occurrence: number; title: string; score: number; tone: string }[];
+  participantConsistency: { email: string; attendedCount: number; totalOccurrences: number }[];
+  keyInsights: string[];
+  recommendedFocusAreas: string[];
+}
+
+const crossMeetingIntelligenceSchema = z.object({
+  recurringThemes: z
+    .array(z.string())
+    .describe("List of themes, topics, or discussion areas that appear across multiple meetings in this series."),
+  unresolvedBlockers: z
+    .array(
+      z.object({
+        issue: z.string().describe("Description of the unresolved blocker or risk."),
+        firstSeenOccurrence: z.number().describe("Occurrence number (1-indexed) where this blocker first appeared."),
+      })
+    )
+    .describe("Issues, blockers, or risks raised in earlier meetings that remain unresolved."),
+  actionItemCarryOver: z
+    .array(
+      z.object({
+        task: z.string().describe("Description of the action item that was not completed."),
+        owner: z.string().describe("Person responsible. 'Unassigned' if unknown."),
+        openSinceOccurrence: z
+          .number()
+          .describe("Occurrence number (1-indexed) where this action item was first assigned."),
+      })
+    )
+    .describe("Action items assigned in earlier meetings that appear to still be open."),
+  sentimentTrend: z
+    .array(
+      z.object({
+        occurrence: z.number().describe("Occurrence number (1-indexed) of the meeting."),
+        title: z.string().describe("Short title of the meeting."),
+        score: z.number().describe("Sentiment score 0-100 (0=very negative, 100=very positive)."),
+        tone: z.string().describe("Overall tone: Positive, Neutral, Concerned, or Heated."),
+      })
+    )
+    .describe("Sentiment score and tone for each meeting occurrence in the series."),
+  participantConsistency: z
+    .array(
+      z.object({
+        email: z.string().describe("Participant email or name."),
+        attendedCount: z.number().describe("Number of meetings in the series this participant attended."),
+        totalOccurrences: z.number().describe("Total number of meetings analyzed in the series."),
+      })
+    )
+    .describe("Attendance consistency of each participant across the series."),
+  keyInsights: z
+    .array(z.string())
+    .describe("High-level AI-generated bullet points summarizing what has been happening across this series."),
+  recommendedFocusAreas: z
+    .array(z.string())
+    .describe("What the next meeting in this series should focus on based on unresolved issues and trends."),
+});
+
+/**
+ * Generates cross-meeting intelligence by analyzing all meetings in a series together.
+ * Sends all transcripts and summaries to Gemini in a single structured call.
+ *
+ * @param meetings - Array of meeting records from the series (ordered by occurrence)
+ * @returns Structured CrossMeetingIntelligence object
+ */
+export async function generateCrossMeetingIntelligence(
+  meetings: Array<{
+    id: string;
+    title: string;
+    date: string;
+    seriesOccurrence?: number | null;
+    participants: string[];
+    transcript?: string | null;
+    summary?: any | null;
+  }>
+): Promise<CrossMeetingIntelligence> {
+  const totalOccurrences = meetings.length;
+
+  // Build a condensed description of each meeting for the prompt
+  const meetingDescriptions = meetings
+    .map((m, idx) => {
+      const occurrence = m.seriesOccurrence ?? idx + 1;
+      const summaryText = m.summary
+        ? [
+            `Purpose: ${m.summary.purpose || ""}`,
+            m.summary.discussionPoints?.length
+              ? `Topics: ${m.summary.discussionPoints.slice(0, 3).join("; ")}`
+              : "",
+            m.summary.importantConcerns?.length
+              ? `Concerns: ${m.summary.importantConcerns.slice(0, 2).join("; ")}`
+              : "",
+            m.summary.actionItems?.length
+              ? `Action Items: ${m.summary.actionItems
+                  .slice(0, 4)
+                  .map((a: any) => `${a.task} (${a.owner}, ${a.status})`)
+                  .join("; ")}`
+              : "",
+            m.summary.sentimentAnalysis
+              ? `Sentiment: ${m.summary.sentimentAnalysis.overallTone} (score: ${m.summary.sentimentAnalysis.score})`
+              : "",
+          ]
+            .filter(Boolean)
+            .join("\n  ")
+        : m.transcript
+          ? `Transcript excerpt: ${stripHtml(m.transcript).slice(0, 500)}`
+          : "No summary or transcript available.";
+
+      return `=== MEETING #${occurrence} (${m.date}) — "${m.title}" ===
+Participants: ${m.participants.join(", ")}
+${summaryText}`;
+    })
+    .join("\n\n");
+
+  const prompt = `You are an expert meeting intelligence analyst. You are analyzing a series of ${totalOccurrences} related recurring meetings.
+
+Your task is to identify patterns, carry-over issues, sentiment trends, and cross-meeting insights.
+
+Here are all the meetings in chronological order:
+
+${meetingDescriptions}
+
+Based on the above meetings, provide a structured cross-meeting intelligence report. Be specific and concrete. 
+- For sentimentTrend, provide one entry per meeting occurrence using the occurrence number and inferred or given sentiment score.
+- For participantConsistency, track each unique participant email/name and how many meetings they attended.
+- For recurringThemes, list specific topics that appeared in 2+ meetings.
+- For unresolvedBlockers, identify risks or concerns from early meetings that were not resolved later.
+- For actionItemCarryOver, identify action items assigned in earlier meetings that still appear open in later ones.
+- Keep keyInsights to 3-5 high-value bullet points.
+- Keep recommendedFocusAreas to 2-4 concrete action items for the next meeting.`;
+
+  const primaryGoogleKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY || process.env.GEMINI_API_KEY;
+  const fallbackKey = process.env.GEMINI_FALL_BACK_KEY;
+  const rotationKeys = getRotationPolicyApiKeys();
+
+  // Build fallback result from available data
+  const buildHeuristicIntelligence = (): CrossMeetingIntelligence => {
+    const allParticipants = new Map<string, number>();
+    meetings.forEach((m) => {
+      m.participants.forEach((p) => allParticipants.set(p, (allParticipants.get(p) || 0) + 1));
+    });
+
+    return {
+      recurringThemes: ["Unable to analyze — no AI key configured or AI service failed"],
+      unresolvedBlockers: [],
+      actionItemCarryOver: [],
+      sentimentTrend: meetings.map((m, idx) => ({
+        occurrence: m.seriesOccurrence ?? idx + 1,
+        title: m.title,
+        score: m.summary?.sentimentAnalysis?.score ?? 70,
+        tone: m.summary?.sentimentAnalysis?.overallTone ?? "Neutral",
+      })),
+      participantConsistency: Array.from(allParticipants.entries()).map(([email, count]) => ({
+        email,
+        attendedCount: count,
+        totalOccurrences,
+      })),
+      keyInsights: ["AI analysis could not be generated. Please configure a Gemini API key."],
+      recommendedFocusAreas: ["Review outstanding action items from previous meetings."],
+    };
+  };
+
+  try {
+    if (primaryGoogleKey) {
+      try {
+        const { object } = await generateObject({
+          model: google("gemini-3.5-flash-lite"),
+          schema: crossMeetingIntelligenceSchema,
+          prompt,
+        });
+        return object as CrossMeetingIntelligence;
+      } catch (e) {
+        console.warn("[CrossMeetingIntelligence] Primary key failed, trying rotation...");
+      }
+    }
+
+    for (const apiKey of rotationKeys.filter((k) => k !== primaryGoogleKey)) {
+      try {
+        const googleClient = createGoogleGenerativeAI({ apiKey });
+        const { object } = await generateObject({
+          model: googleClient("gemini-3.5-flash-lite"),
+          schema: crossMeetingIntelligenceSchema,
+          prompt,
+        });
+        return object as CrossMeetingIntelligence;
+      } catch (e) {
+        console.warn("[CrossMeetingIntelligence] Rotation key failed...");
+      }
+    }
+
+    if (fallbackKey) {
+      try {
+        const googleClient = createGoogleGenerativeAI({ apiKey: fallbackKey });
+        const { object } = await generateObject({
+          model: googleClient("gemini-3.5-flash-lite"),
+          schema: crossMeetingIntelligenceSchema,
+          prompt,
+        });
+        return object as CrossMeetingIntelligence;
+      } catch (e) {
+        console.warn("[CrossMeetingIntelligence] Fallback key failed.");
+      }
+    }
+
+    return buildHeuristicIntelligence();
+  } catch (error) {
+    console.error("[CrossMeetingIntelligence] Unexpected error:", error);
+    return buildHeuristicIntelligence();
+  }
+}
+

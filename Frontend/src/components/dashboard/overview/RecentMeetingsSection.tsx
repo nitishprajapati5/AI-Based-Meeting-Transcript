@@ -24,13 +24,13 @@ export function RecentMeetingsSection({ isLoading, recentMeetings, onViewDetails
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: 0.3 }}
     >
-      <Card className="rounded-2xl border border-zinc-200/50 dark:border-zinc-800/50 bg-white/60 dark:bg-zinc-900/60 backdrop-blur-md shadow-elevated overflow-hidden gradient-top-stripe">
-        <CardHeader className="flex flex-row items-center justify-between border-b border-zinc-100/80 dark:border-zinc-800/50 bg-gradient-to-r from-zinc-50/80 via-indigo-50/20 to-zinc-50/80 dark:from-zinc-900/50 dark:via-indigo-950/10 dark:to-zinc-900/50 py-4 px-6">
+      <Card className="paper-card rounded-xl border border-border shadow-xs overflow-hidden">
+        <CardHeader className="flex flex-row items-center justify-between border-b border-border bg-muted/30 py-4 px-6">
           <div className="space-y-0.5">
-            <CardTitle className="text-base font-bold text-zinc-900 dark:text-zinc-100">
+            <CardTitle className="text-base font-bold text-foreground">
               Recently Created Meetings
             </CardTitle>
-            <CardDescription className="text-xs text-zinc-500 dark:text-zinc-400">
+            <CardDescription className="text-xs text-muted-foreground">
               Latest meeting notes and transcripts uploaded to Syncra.
             </CardDescription>
           </div>
@@ -38,7 +38,7 @@ export function RecentMeetingsSection({ isLoading, recentMeetings, onViewDetails
             <Button
               variant="outline"
               size="sm"
-              className="text-xs font-semibold flex items-center gap-1.5 border-zinc-200/80 dark:border-zinc-800/80 shadow-xs text-zinc-900 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl"
+              className="text-xs font-semibold flex items-center gap-1.5 border-border shadow-xs text-foreground hover:bg-muted rounded-lg"
             >
               View All <ArrowRight className="h-4 w-4" />
             </Button>
@@ -49,20 +49,20 @@ export function RecentMeetingsSection({ isLoading, recentMeetings, onViewDetails
           <div className="hidden md:block overflow-x-auto">
             <Table className="w-full">
               <TableHeader>
-                <TableRow className="border-b border-zinc-200/50 dark:border-zinc-800/50 bg-gradient-to-r from-zinc-50/60 via-indigo-50/10 to-zinc-50/60 dark:from-zinc-900/30 dark:via-indigo-950/5 dark:to-zinc-900/30 hover:bg-transparent">
-                  <TableHead className="font-semibold text-xs text-zinc-500 dark:text-zinc-400 uppercase tracking-wider pl-6 py-3.5">
+                <TableRow className="border-b border-border bg-muted/40 hover:bg-transparent">
+                  <TableHead className="font-semibold text-xs text-muted-foreground uppercase tracking-wider pl-6 py-3.5">
                     Title
                   </TableHead>
-                  <TableHead className="font-semibold text-xs text-zinc-500 dark:text-zinc-400 uppercase tracking-wider py-3.5">
+                  <TableHead className="font-semibold text-xs text-muted-foreground uppercase tracking-wider py-3.5">
                     Type
                   </TableHead>
-                  <TableHead className="font-semibold text-xs text-zinc-500 dark:text-zinc-400 uppercase tracking-wider py-3.5">
+                  <TableHead className="font-semibold text-xs text-muted-foreground uppercase tracking-wider py-3.5">
                     Date
                   </TableHead>
-                  <TableHead className="font-semibold text-xs text-zinc-500 dark:text-zinc-400 uppercase tracking-wider py-3.5">
+                  <TableHead className="font-semibold text-xs text-muted-foreground uppercase tracking-wider py-3.5">
                     Participants
                   </TableHead>
-                  <TableHead className="text-right font-semibold text-xs text-zinc-500 dark:text-zinc-400 uppercase tracking-wider pr-6 py-3.5">
+                  <TableHead className="text-right font-semibold text-xs text-muted-foreground uppercase tracking-wider pr-6 py-3.5">
                     Actions
                   </TableHead>
                 </TableRow>
@@ -70,7 +70,7 @@ export function RecentMeetingsSection({ isLoading, recentMeetings, onViewDetails
               <TableBody>
                 {isLoading ? (
                   Array.from({ length: 4 }).map((_, idx) => (
-                    <TableRow key={idx} className="border-b border-zinc-100 dark:border-zinc-800/50">
+                    <TableRow key={idx} className="border-b border-border/50">
                       <TableCell className="pl-6 py-3.5">
                         <Skeleton className="h-4 w-52 rounded-md" />
                       </TableCell>
@@ -90,14 +90,14 @@ export function RecentMeetingsSection({ isLoading, recentMeetings, onViewDetails
                   ))
                 ) : recentMeetings.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={5} className="text-center py-16 text-zinc-500 dark:text-zinc-400">
+                    <TableCell colSpan={5} className="text-center py-16 text-muted-foreground">
                       <div className="flex flex-col items-center justify-center space-y-3">
-                        <EmptyMeetingsIllustration className="w-24 h-24 text-zinc-400" />
+                        <EmptyMeetingsIllustration className="w-24 h-24 text-muted-foreground/60" />
                         <div>
-                          <p className="text-sm font-bold text-zinc-800 dark:text-zinc-200">
+                          <p className="text-sm font-bold text-foreground">
                             No meetings recorded yet.
                           </p>
-                          <p className="text-xs text-zinc-400 dark:text-zinc-500 mt-1">
+                          <p className="text-xs text-muted-foreground mt-1">
                             Click &quot;Manage Meetings&quot; to get started.
                           </p>
                         </div>
@@ -111,12 +111,12 @@ export function RecentMeetingsSection({ isLoading, recentMeetings, onViewDetails
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.3, delay: index * 0.05 }}
-                      className="border-b border-zinc-100/60 dark:border-zinc-800/40 hover:bg-indigo-50/30 dark:hover:bg-indigo-950/10 transition-all duration-200"
+                      className="border-b border-border/50 hover:bg-muted/40 transition-colors"
                     >
                       <TableCell className="font-medium pl-6 py-3.5">
                         <button
                           onClick={() => onViewDetails(meeting)}
-                          className="hover:underline text-left font-semibold text-zinc-900 dark:text-zinc-100 transition-colors"
+                          className="hover:underline text-left font-semibold text-foreground transition-colors"
                         >
                           {meeting.title}
                         </button>
@@ -124,14 +124,14 @@ export function RecentMeetingsSection({ isLoading, recentMeetings, onViewDetails
                       <TableCell className="py-3.5">
                         <Badge
                           variant="outline"
-                          className="text-xs font-medium border-indigo-200/50 dark:border-indigo-900/40 bg-gradient-to-r from-indigo-50/80 to-violet-50/60 dark:from-indigo-950/40 dark:to-violet-950/30 text-indigo-700 dark:text-indigo-300 rounded-lg"
+                          className="text-xs font-normal border-border bg-muted/50 text-foreground rounded-md"
                         >
                           {meeting.type}
                         </Badge>
                       </TableCell>
                       <TableCell className="py-3.5">
-                        <span className="flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-400 font-medium">
-                          <Calendar className="h-4.5 w-4.5 text-zinc-400" />
+                        <span className="flex items-center gap-1.5 text-xs text-muted-foreground font-medium">
+                          <Calendar className="h-4 w-4 text-muted-foreground/70" />
                           {meeting.date}
                         </span>
                       </TableCell>
@@ -140,13 +140,13 @@ export function RecentMeetingsSection({ isLoading, recentMeetings, onViewDetails
                           {meeting.participants.slice(0, 2).map((p) => (
                             <span
                               key={p}
-                              className="text-[11px] font-semibold bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 px-2 py-0.5 rounded-full border border-zinc-200/60 dark:border-zinc-700/60"
+                              className="text-[11px] font-medium bg-muted text-foreground px-2 py-0.5 rounded-full border border-border"
                             >
                               {p.split("@")[0]}
                             </span>
                           ))}
                           {meeting.participants.length > 2 && (
-                            <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-semibold ml-0.5">
+                            <span className="text-[11px] text-muted-foreground font-medium ml-0.5">
                               +{meeting.participants.length - 2}
                             </span>
                           )}
@@ -157,9 +157,9 @@ export function RecentMeetingsSection({ isLoading, recentMeetings, onViewDetails
                           variant="ghost"
                           size="sm"
                           onClick={() => onViewDetails(meeting)}
-                          className="h-8 text-xs font-semibold flex items-center gap-1.5 ml-auto text-zinc-700 dark:text-zinc-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 rounded-lg"
+                          className="h-8 text-xs font-medium flex items-center gap-1.5 ml-auto text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg"
                         >
-                          <Eye className="h-4 w-4 text-zinc-500" />
+                          <Eye className="h-4 w-4 text-muted-foreground" />
                           Details
                         </Button>
                       </TableCell>
@@ -176,24 +176,24 @@ export function RecentMeetingsSection({ isLoading, recentMeetings, onViewDetails
               Array.from({ length: 3 }).map((_, idx) => (
                 <div
                   key={idx}
-                  className="p-4 rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white/70 dark:bg-zinc-900/70 space-y-3"
+                  className="p-4 rounded-xl border border-border paper-sheet space-y-3"
                 >
                   <div className="flex items-center justify-between">
                     <Skeleton className="h-5 w-40 rounded-md" />
                     <Skeleton className="h-5 w-20 rounded-md" />
                   </div>
-                  <div className="flex items-center justify-between pt-2 border-t border-zinc-100 dark:border-zinc-800">
+                  <div className="flex items-center justify-between pt-2 border-t border-border">
                     <Skeleton className="h-4 w-24 rounded-md" />
                     <Skeleton className="h-7 w-16 rounded-lg" />
                   </div>
                 </div>
               ))
             ) : recentMeetings.length === 0 ? (
-              <div className="p-8 text-center bg-zinc-50 dark:bg-zinc-900/50 rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 text-zinc-500 flex flex-col items-center justify-center space-y-3">
-                <EmptyMeetingsIllustration className="w-20 h-20 text-zinc-400" />
+              <div className="p-8 text-center bg-card rounded-xl border border-border text-muted-foreground flex flex-col items-center justify-center space-y-3">
+                <EmptyMeetingsIllustration className="w-20 h-20 text-muted-foreground/60" />
                 <div>
-                  <p className="text-sm font-bold text-zinc-800 dark:text-zinc-200">No meetings recorded yet.</p>
-                  <p className="text-xs text-zinc-400 dark:text-zinc-500 mt-1">
+                  <p className="text-sm font-bold text-foreground">No meetings recorded yet.</p>
+                  <p className="text-xs text-muted-foreground mt-1">
                     Click &quot;Manage Meetings&quot; to get started.
                   </p>
                 </div>
@@ -205,35 +205,35 @@ export function RecentMeetingsSection({ isLoading, recentMeetings, onViewDetails
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.05 }}
-                  className="p-4 rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white/70 dark:bg-zinc-900/70 shadow-xs space-y-3"
+                  className="p-4 rounded-xl border border-border paper-card shadow-xs space-y-3"
                 >
                   <div className="flex items-start justify-between gap-2">
                     <button
                       onClick={() => onViewDetails(meeting)}
-                      className="text-sm font-bold text-zinc-900 dark:text-zinc-100 hover:underline text-left"
+                      className="text-sm font-semibold text-foreground hover:underline text-left"
                     >
                       {meeting.title}
                     </button>
                     <Badge
                       variant="outline"
-                      className="text-[11px] font-medium border-indigo-200 dark:border-indigo-900/50 bg-indigo-50/50 dark:bg-indigo-950/30 text-indigo-700 dark:text-indigo-300 rounded-md shrink-0"
+                      className="text-[11px] font-normal border-border bg-muted text-foreground rounded-md shrink-0"
                     >
                       {meeting.type}
                     </Badge>
                   </div>
 
-                  <div className="flex items-center justify-between gap-2 pt-2 border-t border-zinc-100 dark:border-zinc-800 text-xs">
-                    <span className="flex items-center gap-1.5 text-zinc-600 dark:text-zinc-400 font-medium">
-                      <Calendar className="h-4 w-4 text-zinc-400" />
+                  <div className="flex items-center justify-between gap-2 pt-2 border-t border-border text-xs">
+                    <span className="flex items-center gap-1.5 text-muted-foreground font-medium">
+                      <Calendar className="h-4 w-4 text-muted-foreground/70" />
                       {meeting.date}
                     </span>
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => onViewDetails(meeting)}
-                      className="h-7 text-xs font-semibold flex items-center gap-1 text-zinc-700 dark:text-zinc-300 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 rounded-lg"
+                      className="h-7 text-xs font-medium flex items-center gap-1 text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg"
                     >
-                      <Eye className="h-3.5 w-3.5 text-zinc-500" />
+                      <Eye className="h-3.5 w-3.5 text-muted-foreground" />
                       Details
                     </Button>
                   </div>
