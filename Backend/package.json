@@ -1,6 +1,6 @@
 {
   "name": "ai-meeting-notes",
-  "version": "1.11.0",
+  "version": "1.12.0",
   "description": "AI-Powered Meeting Notes & Action Item Tracking System",
   "main": "dist/index.js",
   "scripts": {
