@@ -21,6 +21,7 @@ import {
   ArchiveMeetingModal,
   MeetingComparisonModal,
 } from "@/components/dashboard/meetings";
+import { AssignSeriesModal } from "@/components/dashboard/series";
 
 export default function MeetingsPage() {
   const queryClient = useQueryClient();
@@ -41,6 +42,8 @@ export default function MeetingsPage() {
   const [meetingToArchive, setMeetingToArchive] = useState<Meeting | null>(null);
   const [isArchiveModalOpen, setIsArchiveModalOpen] = useState(false);
   const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
+  const [assignSeriesMeeting, setAssignSeriesMeeting] = useState<Meeting | null>(null);
+  const [isAssignSeriesOpen, setIsAssignSeriesOpen] = useState(false);
 
   // TanStack Query for Meetings with Caching
   const { data: meetingsResponse, isLoading } = useQuery({
@@ -53,6 +56,17 @@ export default function MeetingsPage() {
     },
     staleTime: 1000 * 60 * 5, // 5 minutes cache
   });
+
+  // Series list for AssignSeriesModal
+  const { data: seriesListRaw = [] } = useQuery({
+    queryKey: ["series"],
+    queryFn: async () => {
+      const res = await callService({ serviceId: SERVICE_IDS.SERIES.LIST });
+      return Array.isArray(res) ? res : res?.data || [];
+    },
+    staleTime: 1000 * 60 * 5,
+  });
+  const seriesList: any[] = seriesListRaw;
 
   const meetings: Meeting[] = Array.isArray(meetingsResponse?.data)
     ? meetingsResponse.data
@@ -251,6 +265,39 @@ export default function MeetingsPage() {
   const isDeleting = deleteMeetingMutation.isPending;
   const isArchiving = ArchiveMutation.isPending;
 
+  // Assign / remove meeting from series mutations
+  const assignSeriesMutation = useMutation({
+    mutationFn: async ({ meetingId, seriesId }: { meetingId: string; seriesId: string }) => {
+      await callService({
+        serviceId: SERVICE_IDS.SERIES.ASSIGN_MEETING,
+        payload: { meetingId, seriesId },
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["meetings"] });
+      queryClient.invalidateQueries({ queryKey: ["series"] });
+      toast.success("Meeting assigned to series!");
+      setIsAssignSeriesOpen(false);
+    },
+    onError: () => toast.error("Failed to assign meeting to series"),
+  });
+
+  const removeSeriesMutation = useMutation({
+    mutationFn: async (meetingId: string) => {
+      await callService({
+        serviceId: SERVICE_IDS.SERIES.REMOVE_MEETING,
+        payload: { meetingId },
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["meetings"] });
+      queryClient.invalidateQueries({ queryKey: ["series"] });
+      toast.success("Meeting removed from series");
+      setIsAssignSeriesOpen(false);
+    },
+    onError: () => toast.error("Failed to remove meeting from series"),
+  });
+
   // Client-side filtering (for search and type filter)
   const filteredMeetings = useMemo(() => {
     return meetings.filter((meeting) => {
@@ -356,6 +403,10 @@ export default function MeetingsPage() {
         pinningMeetingId={pinningMeetingId}
         handleCreatingClone={handleCreatingClone}
         IsCloneMeetingLoading={IsCloneMeetingLoading}
+        onAssignSeries={(meeting) => {
+          setAssignSeriesMeeting(meeting);
+          setIsAssignSeriesOpen(true);
+        }}
       />
 
       {/* Mobile Responsive Cards View */}
@@ -444,6 +495,27 @@ export default function MeetingsPage() {
         onClose={() => setIsCompareModalOpen(false)}
         meetings={meetings}
       />
+
+      {/* Assign to Series Modal */}
+      {assignSeriesMeeting && (
+        <AssignSeriesModal
+          isOpen={isAssignSeriesOpen}
+          onClose={() => {
+            setIsAssignSeriesOpen(false);
+            setAssignSeriesMeeting(null);
+          }}
+          meetingTitle={assignSeriesMeeting.title}
+          seriesList={seriesList}
+          currentSeriesId={(assignSeriesMeeting as any).seriesId}
+          onAssign={async (seriesId) => {
+            await assignSeriesMutation.mutateAsync({ meetingId: assignSeriesMeeting.id, seriesId });
+          }}
+          onRemove={async () => {
+            await removeSeriesMutation.mutateAsync(assignSeriesMeeting.id);
+          }}
+          isLoading={assignSeriesMutation.isPending || removeSeriesMutation.isPending}
+        />
+      )}
     </div>
   );
 }

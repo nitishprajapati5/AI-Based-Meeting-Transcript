@@ -156,6 +156,10 @@ function matchRequest(
   resParams = match("/jobs/:id");
   if (resParams && m === "GET") return { serviceId: SERVICE_IDS.JOBS.GET, params: resParams };
 
+  // Audit & Security Logs
+  if (path === "/audit/stats" && m === "GET") return { serviceId: SERVICE_IDS.AUDIT.STATS };
+  if (path === "/audit/logs" && m === "GET") return { serviceId: SERVICE_IDS.AUDIT.LOGS };
+
   return null;
 }
 
