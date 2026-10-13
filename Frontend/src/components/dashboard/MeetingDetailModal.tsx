@@ -432,7 +432,7 @@ export function MeetingDetailModal({
 
             {/* Transcript & Rich Text Notes View */}
             <TabsContent value="transcript" className="mt-3">
-              <div className="bg-zinc-50 dark:bg-zinc-900 p-4 rounded-md border border-zinc-200 dark:border-zinc-800 text-sm min-h-[160px] leading-relaxed prose dark:prose-invert max-w-none">
+              <div className="notebook-ruled paper-sheet p-6 rounded-xl border border-border text-sm min-h-[180px] leading-[28px] prose dark:prose-invert max-w-none shadow-sm">
                 {meeting.transcript ? (
                   meeting.transcript.includes("<") && meeting.transcript.includes(">") ? (
                     <div dangerouslySetInnerHTML={{ __html: meeting.transcript }} />
@@ -440,7 +440,7 @@ export function MeetingDetailModal({
                     <div className="whitespace-pre-wrap">{meeting.transcript}</div>
                   )
                 ) : (
-                  <span className="text-zinc-400 italic">No transcript available for this meeting.</span>
+                  <span className="text-muted-foreground italic">No transcript available for this meeting.</span>
                 )}
               </div>
             </TabsContent>

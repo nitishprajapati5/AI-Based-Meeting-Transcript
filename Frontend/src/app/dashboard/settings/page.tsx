@@ -108,7 +108,7 @@ export default function SettingsPage() {
       <div className="w-full flex justify-center py-6 px-4">
         <div className="w-full space-y-8 max-w-4xl animate-pulse">
           {/* Header Skeleton */}
-          <div className="flex justify-between items-center pb-4 border-b border-zinc-100 dark:border-zinc-800">
+          <div className="flex justify-between items-center pb-4 border-b border-zinc-100">
             <div className="space-y-2">
               <Skeleton className="h-8 w-48 rounded-lg" />
               <Skeleton className="h-4 w-72 rounded-md" />
@@ -206,7 +206,7 @@ export default function SettingsPage() {
           </MobileCollapsibleTab>
 
           <MobileCollapsibleTab
-            label="Account & Security"
+            label="Security & Audit"
             icon={Shield}
             isOpen={activeTab === "security"}
             onClick={() => setActiveTab(activeTab === "security" ? ("" as any) : "security")}
@@ -247,10 +247,10 @@ interface MobileCollapsibleTabProps {
 
 function MobileCollapsibleTab({ label, icon: Icon, isOpen, onClick, children }: MobileCollapsibleTabProps) {
   return (
-    <div className="border border-zinc-200/80 dark:border-zinc-800/80 rounded-2xl overflow-hidden bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md">
+    <div className="border border-zinc-200/80 rounded-2xl overflow-hidden bg-white/70 backdrop-blur-md">
       <button
         onClick={onClick}
-        className="w-full flex items-center justify-between p-4 text-left font-bold text-sm text-zinc-900 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors"
+        className="w-full flex items-center justify-between p-4 text-left font-bold text-sm text-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors"
       >
         <div className="flex items-center gap-3">
           <Icon className="w-4.5 h-4.5 text-indigo-500" />
@@ -262,11 +262,7 @@ function MobileCollapsibleTab({ label, icon: Icon, isOpen, onClick, children }: 
           <ChevronDown className="w-4.5 h-4.5 text-zinc-500" />
         )}
       </button>
-      {isOpen && (
-        <div className="p-1 border-t border-zinc-100 dark:border-zinc-800 bg-zinc-50/20 dark:bg-zinc-900/20">
-          {children}
-        </div>
-      )}
+      {isOpen && <div className="p-1 border-t border-zinc-100 bg-zinc-50/20">{children}</div>}
     </div>
   );
 }

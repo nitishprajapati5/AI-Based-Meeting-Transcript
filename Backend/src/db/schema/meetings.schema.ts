@@ -1,4 +1,5 @@
-import { pgTable, text, timestamp, varchar, jsonb, index, boolean } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, varchar, jsonb, index, boolean, integer } from "drizzle-orm/pg-core";
+import { users } from "./users.schema";
 
 export type SummaryLength = "Short" | "Medium" | "Long";
 export type SummaryTemplate = "Standard" | "Executive" | "Developer" | "Technical" | "Sales";
@@ -79,6 +80,33 @@ export interface MeetingSummary {
 }
 
 /**
+ * Meeting Series Table
+ * Groups related recurring meetings into a named series
+ */
+export const meetingSeries = pgTable(
+  "meeting_series",
+  {
+    id: varchar("id", { length: 255 }).primaryKey(),
+    userId: varchar("user_id", { length: 255 })
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    title: text("title").notNull(),
+    description: text("description").default(""),
+    color: text("color").notNull().default("#6366f1"),
+    recurrenceLabel: text("recurrence_label").notNull().default("Weekly"),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow(),
+  },
+  (table) => [
+    index("meeting_series_user_id_idx").on(table.userId),
+    index("meeting_series_created_at_idx").on(table.createdAt),
+  ]
+);
+
+export type MeetingSeriesRecord = typeof meetingSeries.$inferSelect;
+export type NewMeetingSeriesRecord = typeof meetingSeries.$inferInsert;
+
+/**
  * Meetings Table
  * Stores meeting records with transcripts, participants, and AI-generated summaries
  */
@@ -102,6 +130,8 @@ export const meetings = pgTable(
     isArchived: boolean("is_archived").notNull().default(false),
     isArchivedAt: timestamp("is_archived_at", { withTimezone: true }),
     isPinned: boolean("is_pinned").notNull().default(false),
+    seriesId: varchar("series_id", { length: 255 }).references(() => meetingSeries.id, { onDelete: "set null" }),
+    seriesOccurrence: integer("series_occurrence"),
   },
   (table) => [
     index("meetings_date_idx").on(table.date),
@@ -109,6 +139,7 @@ export const meetings = pgTable(
     index("meetings_created_at_idx").on(table.createdAt),
     index("meetings_archived_created_idx").on(table.isArchived, table.isDeleted, table.createdAt),
     index("meetings_participants_gin_idx").using("gin", table.participants),
+    index("meetings_series_id_idx").on(table.seriesId),
   ]
 );
 

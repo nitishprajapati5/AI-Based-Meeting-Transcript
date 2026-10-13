@@ -1,3 +1,10 @@
+# [1.12.0](https://github.com/nitishprajapati5/AI-Based-Meeting-Transcript/compare/v1.11.0...v1.12.0) (2026-09-07)
+
+
+### Features
+
+* implement comprehensive action item tracking with subtask management, dependency monitoring, and expanded dashboard views. ([569637b](https://github.com/nitishprajapati5/AI-Based-Meeting-Transcript/commit/569637b16d39c8ae1386cc2b0055a61dba36e35f))
+
 # [1.11.0](https://github.com/nitishprajapati5/AI-Based-Meeting-Transcript/compare/v1.10.0...v1.11.0) (2026-08-21)
 
 
