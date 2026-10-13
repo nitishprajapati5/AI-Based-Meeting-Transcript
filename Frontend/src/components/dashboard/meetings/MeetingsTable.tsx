@@ -17,6 +17,7 @@ import {
   PinOff,
   Copy,
   MoreVertical,
+  Repeat2,
 } from "lucide-react";
 import { EmptyMeetingsIllustration } from "@/components/ui/illustrations";
 import { motion, AnimatePresence } from "framer-motion";
@@ -39,6 +40,7 @@ interface MeetingsTableProps {
   pinningMeetingId: string | null;
   handleCreatingClone: (meeting: Meeting) => void;
   IsCloneMeetingLoading: boolean;
+  onAssignSeries?: (meeting: Meeting) => void;
 }
 
 export function MeetingsTable({
@@ -52,6 +54,7 @@ export function MeetingsTable({
   pinningMeetingId,
   handleCreatingClone,
   IsCloneMeetingLoading,
+  onAssignSeries,
 }: MeetingsTableProps) {
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
 
@@ -62,23 +65,23 @@ export function MeetingsTable({
   }, [IsCloneMeetingLoading]);
 
   return (
-    <div className="hidden md:block bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200/80 dark:border-zinc-800/80 overflow-hidden shadow-sm">
+    <div className="hidden md:block paper-sheet rounded-xl border border-border overflow-hidden shadow-xs">
       <Table>
         <TableHeader>
-          <TableRow className="border-b border-zinc-200/80 dark:border-zinc-800/80 bg-zinc-50/50 dark:bg-zinc-900/30 hover:bg-transparent">
-            <TableHead className="font-semibold text-xs text-zinc-500 dark:text-zinc-400 uppercase tracking-wider pl-6 py-3.5">
+          <TableRow className="border-b border-border bg-muted/40 hover:bg-transparent">
+            <TableHead className="font-semibold text-xs text-muted-foreground uppercase tracking-wider pl-6 py-3.5">
               Title
             </TableHead>
-            <TableHead className="font-semibold text-xs text-zinc-500 dark:text-zinc-400 uppercase tracking-wider py-3.5">
+            <TableHead className="font-semibold text-xs text-muted-foreground uppercase tracking-wider py-3.5">
               Type
             </TableHead>
-            <TableHead className="font-semibold text-xs text-zinc-500 dark:text-zinc-400 uppercase tracking-wider py-3.5">
+            <TableHead className="font-semibold text-xs text-muted-foreground uppercase tracking-wider py-3.5">
               Date
             </TableHead>
-            <TableHead className="font-semibold text-xs text-zinc-500 dark:text-zinc-400 uppercase tracking-wider py-3.5">
+            <TableHead className="font-semibold text-xs text-muted-foreground uppercase tracking-wider py-3.5">
               Participants
             </TableHead>
-            <TableHead className="font-semibold text-xs text-zinc-500 dark:text-zinc-400 uppercase tracking-wider pr-6 py-3.5 text-right">
+            <TableHead className="font-semibold text-xs text-muted-foreground uppercase tracking-wider pr-6 py-3.5 text-right">
               Actions
             </TableHead>
           </TableRow>
@@ -86,7 +89,7 @@ export function MeetingsTable({
         <TableBody>
           {isLoading ? (
             Array.from({ length: 5 }).map((_, idx) => (
-              <TableRow key={idx} className="border-b border-zinc-100 dark:border-zinc-800/50">
+              <TableRow key={idx} className="border-b border-border/50">
                 <TableCell className="pl-6 py-4">
                   <Skeleton className="h-4 w-48 rounded-md" />
                 </TableCell>
@@ -106,16 +109,12 @@ export function MeetingsTable({
             ))
           ) : displayMeetings.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={5} className="text-center py-16 text-zinc-500 dark:text-zinc-400">
+              <TableCell colSpan={5} className="text-center py-16 text-muted-foreground">
                 <div className="flex flex-col items-center justify-center space-y-3">
-                  <EmptyMeetingsIllustration className="w-24 h-24 text-zinc-400" />
+                  <EmptyMeetingsIllustration className="w-24 h-24 text-muted-foreground/60" />
                   <div>
-                    <p className="text-sm font-bold text-zinc-800 dark:text-zinc-200">
-                      No meetings found matching your search.
-                    </p>
-                    <p className="text-xs text-zinc-400 dark:text-zinc-500 mt-1">
-                      Try adjusting your filters or search keywords.
-                    </p>
+                    <p className="text-sm font-bold text-foreground">No meetings found matching your search.</p>
+                    <p className="text-xs text-muted-foreground mt-1">Try adjusting your filters or search keywords.</p>
                   </div>
                 </div>
               </TableCell>
@@ -130,12 +129,12 @@ export function MeetingsTable({
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ type: "spring", stiffness: 350, damping: 35 }}
-                  className="border-b border-zinc-100 dark:border-zinc-800/50 hover:bg-zinc-50/80 dark:hover:bg-zinc-800/40 transition-colors"
+                  className="border-b border-border/50 hover:bg-muted/50 transition-colors"
                 >
                   <TableCell className="font-medium pl-6 py-3.5">
                     <button
                       onClick={() => onViewDetails(meeting)}
-                      className="hover:underline text-left font-semibold text-zinc-900 dark:text-zinc-100 transition-colors"
+                      className="hover:underline text-left font-semibold text-foreground transition-colors"
                     >
                       {meeting.title}
                     </button>
@@ -144,14 +143,14 @@ export function MeetingsTable({
                     <div className="flex items-center gap-1.5">
                       <Badge
                         variant="outline"
-                        className="text-xs font-normal border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 text-zinc-700 dark:text-zinc-300 rounded-md"
+                        className="text-xs font-normal border-border bg-muted/50 text-foreground rounded-md"
                       >
                         {meeting.type}
                       </Badge>
                       {!meeting.summary && meeting.transcript && (
                         <Badge
                           variant="secondary"
-                          className="text-[10px] font-medium bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800 animate-pulse flex items-center gap-1"
+                          className="text-[10px] font-medium bg-amber-500/10 text-amber-500 border border-amber-500/30 animate-pulse flex items-center gap-1"
                         >
                           <Loader2 className="h-3 w-3 animate-spin" />
                           Summarizing...
@@ -160,23 +159,23 @@ export function MeetingsTable({
                     </div>
                   </TableCell>
                   <TableCell className="py-3.5">
-                    <span className="flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-400 font-medium">
-                      <Calendar className="h-4.5 w-4.5 text-zinc-400" />
+                    <span className="flex items-center gap-1.5 text-xs text-muted-foreground font-medium">
+                      <Calendar className="h-4.5 w-4.5 text-muted-foreground/70" />
                       {meeting.date}
                     </span>
                   </TableCell>
                   <TableCell className="py-3.5">
-                    <div className="flex flex-wrap gap-1 max-w-[220px] items-center">
+                    <div className="flex flex-wrap gap-1 max-w-55 items-center">
                       {meeting.participants.slice(0, 2).map((p) => (
                         <span
                           key={p}
-                          className="text-[11px] font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 px-2 py-0.5 rounded-full border border-zinc-200/60 dark:border-zinc-700/60"
+                          className="text-[11px] font-medium bg-muted text-foreground px-2 py-0.5 rounded-full border border-border"
                         >
                           {p.split("@")[0]}
                         </span>
                       ))}
                       {meeting.participants.length > 2 && (
-                        <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-medium ml-0.5">
+                        <span className="text-[11px] text-muted-foreground font-medium ml-0.5">
                           +{meeting.participants.length - 2} more
                         </span>
                       )}
@@ -191,8 +190,8 @@ export function MeetingsTable({
                         disabled={pinningMeetingId === meeting.id}
                         className={`h-8 w-8 rounded-md ${
                           meeting.isPinned
-                            ? "text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-950/30"
-                            : "text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                            ? "text-indigo-500 hover:bg-indigo-500/10"
+                            : "text-muted-foreground hover:bg-muted"
                         }`}
                         title={meeting.isPinned ? "Unpin Meeting" : "Pin Meeting"}
                       >
@@ -217,7 +216,7 @@ export function MeetingsTable({
                             <Button
                               variant="ghost"
                               size="icon"
-                              className="h-8 w-8 text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-zinc-50 rounded-md"
+                              className="h-8 w-8 text-muted-foreground hover:text-foreground rounded-md"
                             />
                           }
                         >
@@ -225,28 +224,34 @@ export function MeetingsTable({
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="w-44">
                           <DropdownMenuItem onClick={() => onViewDetails(meeting)}>
-                            <Eye className="mr-2 h-4 w-4 text-zinc-500" />
+                            <Eye className="mr-2 h-4 w-4 text-muted-foreground" />
                             <span>View Details</span>
                           </DropdownMenuItem>
                           <DropdownMenuItem onClick={() => onEdit(meeting)}>
-                            <Edit className="mr-2 h-4 w-4 text-zinc-500" />
+                            <Edit className="mr-2 h-4 w-4 text-muted-foreground" />
                             <span>Edit Meeting</span>
                           </DropdownMenuItem>
                           <DropdownMenuItem onClick={() => onViewDetails(meeting)}>
-                            <Share2 className="mr-2 h-4 w-4 text-zinc-500" />
+                            <Share2 className="mr-2 h-4 w-4 text-muted-foreground" />
                             <span>Share Meeting</span>
                           </DropdownMenuItem>
                           <DropdownMenuItem disabled={meeting.isPinned} onClick={() => onArchive(meeting)}>
-                            <Archive className="mr-2 h-4 w-4 text-zinc-500" />
+                            <Archive className="mr-2 h-4 w-4 text-muted-foreground" />
                             <span>Archive</span>
                           </DropdownMenuItem>
                           <DropdownMenuItem closeOnClick={false} onClick={() => handleCreatingClone(meeting)}>
-                            <Copy className="mr-2 h-4 w-4 text-zinc-500" />
+                            <Copy className="mr-2 h-4 w-4 text-muted-foreground" />
                             <span>Clone Meeting</span>
                             {IsCloneMeetingLoading ? (
-                              <Loader2 className="ml-auto h-4 w-4 animate-spin text-zinc-500" />
+                              <Loader2 className="ml-auto h-4 w-4 animate-spin text-muted-foreground" />
                             ) : null}
                           </DropdownMenuItem>
+                          {onAssignSeries && (
+                            <DropdownMenuItem onClick={() => onAssignSeries(meeting)}>
+                              <Repeat2 className="mr-2 h-4 w-4 text-indigo-500" />
+                              <span>Assign to Series</span>
+                            </DropdownMenuItem>
+                          )}
                           <DropdownMenuSeparator />
                           <DropdownMenuItem variant="destructive" onClick={() => onDelete(meeting)}>
                             <Trash2 className="mr-2 h-4 w-4" />

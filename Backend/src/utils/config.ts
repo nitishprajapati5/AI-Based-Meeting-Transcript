@@ -3,8 +3,12 @@
  * Validates and exposes all environment variables with type safety
  */
 
+import dotenv from "dotenv";
 import { z } from "zod";
 import { logger } from "./logger";
+
+// Ensure environment variables from .env are loaded prior to validation
+dotenv.config();
 
 export type currentEnviromentType = "Production" | "Test" | "Development";
 

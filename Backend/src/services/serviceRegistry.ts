@@ -9,7 +9,7 @@ import {
   changePassword,
   generateMagicLink,
   resetPasswordWithToken,
-} from "../controllers/authController";
+} from "../modules/auth/auth.controller";
 import {
   getMeetings,
   getMeetingById,
@@ -26,7 +26,7 @@ import {
   permanentlyDeleteMeeting,
   toggleMeetingPin,
   createMeetingClone,
-} from "../controllers/meetingController";
+} from "../modules/meetings/meetings.controller";
 import {
   getActionItems,
   getActionItemsByMeeting,
@@ -35,16 +35,20 @@ import {
   createActionItem,
   updateActionItem,
   deleteActionItem,
-} from "../controllers/actionItemController";
-import { getDashboardStats } from "../controllers/dashboardController";
-import { getUserSettings, updateUserSettings, getUserSessions } from "../controllers/settingsController";
-import { getNotifications, markAllNotificationsRead, clearNotifications } from "../controllers/notificationController";
+} from "../modules/action-items/action-items.controller";
+import { getDashboardStats } from "../modules/dashboard/dashboard.controller";
+import { getUserSettings, updateUserSettings, getUserSessions } from "../modules/settings/settings.controller";
+import {
+  getNotifications,
+  markAllNotificationsRead,
+  clearNotifications,
+} from "../modules/notifications/notifications.controller";
 import {
   queryGlobalChatMemory,
   getChatSessionsList,
   getChatSessionMessages,
   triggerUserMemorySync,
-} from "../controllers/chatController";
+} from "../modules/chat/chat.controller";
 import { jobQueue } from "../services/jobQueue";
 import { NotFoundError } from "../utils/errors";
 import { asyncHandler } from "../middleware/errorHandler";
@@ -63,6 +67,24 @@ import {
   actionItemQuerySchema,
   forgotPassword,
   resetPasswordWithTokenSchema,
+  auditLogQuerySchema,
+} from "../utils/validation";
+import { getAuditStats, getAuditLogs } from "../modules/audit/audit.controller";
+import {
+  createSeries,
+  listSeries,
+  getSeriesById,
+  updateSeries,
+  deleteSeries,
+  assignMeetingToSeries,
+  removeMeetingFromSeries,
+  getSeriesIntelligence,
+} from "../modules/series/series.controller";
+import {
+  createSeriesSchema,
+  updateSeriesSchema,
+  assignMeetingToSeriesSchema,
+  removeMeetingFromSeriesSchema,
 } from "../utils/validation";
 
 export interface ServiceDefinition {
@@ -348,5 +370,66 @@ export const serviceRegistry: Record<string, ServiceDefinition> = {
     serviceId: "memory.sync",
     handler: triggerUserMemorySync,
     requiresAuth: true,
+  },
+
+  // Audit & Security Log Services
+  "audit.stats": {
+    serviceId: "audit.stats",
+    handler: getAuditStats,
+    requiresAuth: true,
+  },
+  "audit.logs": {
+    serviceId: "audit.logs",
+    handler: getAuditLogs,
+    requiresAuth: true,
+    validation: { query: auditLogQuerySchema },
+  },
+  // Series Services
+  "series.create": {
+    serviceId: "series.create",
+    handler: createSeries,
+    requiresAuth: true,
+    validation: { body: createSeriesSchema },
+  },
+  "series.list": {
+    serviceId: "series.list",
+    handler: listSeries,
+    requiresAuth: true,
+  },
+  "series.get": {
+    serviceId: "series.get",
+    handler: getSeriesById,
+    requiresAuth: true,
+    validation: { params: idSchema },
+  },
+  "series.update": {
+    serviceId: "series.update",
+    handler: updateSeries,
+    requiresAuth: true,
+    validation: { params: idSchema, body: updateSeriesSchema },
+  },
+  "series.delete": {
+    serviceId: "series.delete",
+    handler: deleteSeries,
+    requiresAuth: true,
+    validation: { params: idSchema },
+  },
+  "series.assignMeeting": {
+    serviceId: "series.assignMeeting",
+    handler: assignMeetingToSeries,
+    requiresAuth: true,
+    validation: { body: assignMeetingToSeriesSchema },
+  },
+  "series.removeMeeting": {
+    serviceId: "series.removeMeeting",
+    handler: removeMeetingFromSeries,
+    requiresAuth: true,
+    validation: { body: removeMeetingFromSeriesSchema },
+  },
+  "series.intelligence": {
+    serviceId: "series.intelligence",
+    handler: getSeriesIntelligence,
+    requiresAuth: true,
+    validation: { params: idSchema },
   },
 };
