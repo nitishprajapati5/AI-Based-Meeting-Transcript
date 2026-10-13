@@ -23,7 +23,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@ai-sdk/google": "^4.0.44",
+    "@ai-sdk/google": "^4.0.56",
     "@ai-sdk/openai": "^4.0.41",
     "@ai-sdk/xai": "^4.0.48",
     "@bull-board/api": "^9.3.2",
