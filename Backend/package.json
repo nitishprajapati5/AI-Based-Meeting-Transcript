@@ -1,6 +1,6 @@
 {
   "name": "ai-meeting-notes",
-  "version": "1.11.0",
+  "version": "1.12.0",
   "description": "AI-Powered Meeting Notes & Action Item Tracking System",
   "main": "dist/index.js",
   "scripts": {
@@ -25,7 +25,7 @@
   "dependencies": {
     "@ai-sdk/google": "^4.0.44",
     "@ai-sdk/openai": "^4.0.41",
-    "@ai-sdk/xai": "^4.0.38",
+    "@ai-sdk/xai": "^4.0.48",
     "@bull-board/api": "^9.3.2",
     "@bull-board/express": "^9.3.2",
     "@bull-board/ui": "^9.5.0",
@@ -34,7 +34,7 @@
     "@langchain/google-genai": "^2.3.0",
     "@neondatabase/serverless": "^1.1.0",
     "@types/ws": "^8.18.1",
-    "ai": "^7.0.65",
+    "ai": "^7.0.92",
     "bcryptjs": "^3.0.3",
     "bullmq": "^6.2.0",
     "cookie-parser": "^1.4.6",

@@ -1,6 +1,6 @@
 {
   "name": "assignment-workspace",
-  "version": "1.11.0",
+  "version": "1.12.0",
   "private": true,
   "scripts": {
     "dev": "concurrently -k -p \"[{name}]\" -n \"Backend,Frontend\" -c \"cyan,magenta\" \"npm run dev --prefix Backend\" \"npm run dev --prefix Frontend\"",
@@ -27,9 +27,9 @@
     "@semantic-release/commit-analyzer": "^13.0.1",
     "@semantic-release/exec": "^7.1.0",
     "@semantic-release/git": "^11.0.1",
-    "@semantic-release/github": "^12.0.9",
+    "@semantic-release/github": "^12.0.10",
     "@semantic-release/release-notes-generator": "^14.1.1",
-    "concurrently": "^9.1.2",
+    "concurrently": "^9.2.5",
     "husky": "^9.1.7",
     "lint-staged": "^15.4.3",
     "semantic-release": "^25.0.9"
@@ -43,6 +43,6 @@
     }
   },
   "dependencies": {
-    "resend": "^6.21.0"
+    "resend": "^6.32.1"
   }
 }

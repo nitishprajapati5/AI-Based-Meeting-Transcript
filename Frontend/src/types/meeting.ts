@@ -16,6 +16,12 @@ export interface KeyDecision {
   context?: string;
 }
 
+export interface SubTask {
+  id: string;
+  title: string;
+  completed: boolean;
+}
+
 export interface ActionItem {
   id?: string;
   meetingId?: string;
@@ -24,6 +30,8 @@ export interface ActionItem {
   dueDate: string;
   priority: "Low" | "Medium" | "High" | "Urgent";
   status: "Open" | "In Progress" | "Blocked" | "Completed" | "Pending";
+  subtasks?: SubTask[];
+  dependsOn?: string[];
 }
 
 export interface SpeakerAnalytics {
