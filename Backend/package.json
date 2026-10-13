@@ -25,7 +25,7 @@
   "dependencies": {
     "@ai-sdk/google": "^4.0.44",
     "@ai-sdk/openai": "^4.0.41",
-    "@ai-sdk/xai": "^4.0.38",
+    "@ai-sdk/xai": "^4.0.48",
     "@bull-board/api": "^9.3.2",
     "@bull-board/express": "^9.3.2",
     "@bull-board/ui": "^9.3.2",
