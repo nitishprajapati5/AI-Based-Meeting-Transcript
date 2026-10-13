@@ -8,3 +8,5 @@ export * from "./ActionItemsCards";
 export * from "./ActionItemsPagination";
 export * from "./DeleteActionItemModal";
 export * from "./ActionItemsKanban";
+export * from "./ActionItemsTimeline";
+export * from "./ActionItemsMatrix";

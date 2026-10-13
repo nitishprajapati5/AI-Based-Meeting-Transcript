@@ -23,6 +23,8 @@ import {
   ActionItemsTable,
   ActionItemsCards,
   ActionItemsKanban,
+  ActionItemsTimeline,
+  ActionItemsMatrix,
   ActionItemsPagination,
   DeleteActionItemModal,
 } from "@/components/dashboard/action-items";
@@ -97,6 +99,8 @@ export default function ActionTrackerPage() {
     dueDate: stripHtml(item.dueDate) || "Not specified",
     priority: item.priority || "Medium",
     status: item.status || "Open",
+    subtasks: Array.isArray(item.subtasks) ? item.subtasks : [],
+    dependsOn: Array.isArray(item.dependsOn) ? item.dependsOn : [],
     isOverdue: checkIsOverdue(item.dueDate, item.status),
   }));
 
@@ -338,8 +342,30 @@ export default function ActionTrackerPage() {
     }
   };
 
+  // Subtask toggle mutation
+  const handleToggleSubtask = async (itemId: string, subtaskId: string, completed: boolean) => {
+    const item = actionItems.find((i) => i.id === itemId);
+    if (!item) return;
+
+    const updatedSubtasks = (item.subtasks || []).map((st) => (st.id === subtaskId ? { ...st, completed } : st));
+
+    try {
+      await callService({
+        serviceId: SERVICE_IDS.ACTION_ITEMS.UPDATE,
+        params: { id: itemId },
+        payload: { subtasks: updatedSubtasks },
+      });
+      queryClient.invalidateQueries({ queryKey: ["actionItems"] });
+    } catch (err) {
+      toast.error("Failed to update subtask");
+      console.error("Subtask toggle error:", err);
+    }
+  };
+
   // Create / Edit Handler
-  const handleSaveItem = async (itemData: Partial<ActionItem> & { meetingId: string }) => {
+  const handleSaveItem = async (
+    itemData: Partial<ActionItem> & { meetingId: string; subtasks?: any[]; dependsOn?: string[] }
+  ) => {
     try {
       await saveActionItemMutation.mutateAsync(itemData);
       setIsModalOpen(false);
@@ -424,13 +450,46 @@ export default function ActionTrackerPage() {
         setViewMode={setViewMode}
       />
 
+      {/* Dynamic View Mode Renderer */}
       {viewMode === "kanban" ? (
-        /* Drag-and-Drop Kanban Board View */
+        /* Kanban Board View */
         <ActionItemsKanban
           isLoading={isLoading}
           displayItems={displayItems}
+          allItems={actionItems}
           updatingItemId={updatingItemId}
           onStatusChange={handleStatusChange}
+          onToggleSubtask={handleToggleSubtask}
+          onEdit={(item) => {
+            setEditingItem(item);
+            setIsModalOpen(true);
+          }}
+          onDelete={handleOpenDeleteModal}
+        />
+      ) : viewMode === "timeline" ? (
+        /* Timeline / Gantt Roadmap View */
+        <ActionItemsTimeline
+          isLoading={isLoading}
+          displayItems={displayItems}
+          allItems={actionItems}
+          updatingItemId={updatingItemId}
+          onStatusChange={handleStatusChange}
+          onToggleSubtask={handleToggleSubtask}
+          onEdit={(item) => {
+            setEditingItem(item);
+            setIsModalOpen(true);
+          }}
+          onDelete={handleOpenDeleteModal}
+        />
+      ) : viewMode === "matrix" ? (
+        /* Eisenhower Matrix 4-Quadrant View */
+        <ActionItemsMatrix
+          isLoading={isLoading}
+          displayItems={displayItems}
+          allItems={actionItems}
+          updatingItemId={updatingItemId}
+          onStatusChange={handleStatusChange}
+          onToggleSubtask={handleToggleSubtask}
           onEdit={(item) => {
             setEditingItem(item);
             setIsModalOpen(true);
@@ -444,8 +503,10 @@ export default function ActionTrackerPage() {
             isLoading={isLoading}
             isFetching={isActionItemsFetching}
             displayItems={displayItems}
+            allItems={actionItems}
             updatingItemId={updatingItemId}
             onStatusChange={handleStatusChange}
+            onToggleSubtask={handleToggleSubtask}
             onEdit={(item) => {
               setEditingItem(item);
               setIsModalOpen(true);
@@ -461,8 +522,10 @@ export default function ActionTrackerPage() {
             isLoading={isLoading}
             isFetching={isActionItemsFetching}
             displayItems={displayItems}
+            allItems={actionItems}
             updatingItemId={updatingItemId}
             onStatusChange={handleStatusChange}
+            onToggleSubtask={handleToggleSubtask}
             onEdit={(item) => {
               setEditingItem(item);
               setIsModalOpen(true);
@@ -494,6 +557,7 @@ export default function ActionTrackerPage() {
         onSave={handleSaveItem}
         meetings={meetings}
         initialData={editingItem}
+        availableActionItems={actionItems}
       />
 
       {/* Delete Confirmation Modal */}

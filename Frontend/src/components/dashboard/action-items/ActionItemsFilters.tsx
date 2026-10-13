@@ -7,6 +7,8 @@ import {
   AlertTriangle,
   LayoutList,
   Kanban,
+  CalendarRange,
+  LayoutGrid,
   X,
   User,
   RotateCcw,
@@ -14,8 +16,9 @@ import {
   CircleDot,
   Flame,
 } from "lucide-react";
+import { ActionTrackerViewMode } from "./types";
 
-export type ActionTrackerViewMode = "table" | "kanban";
+export type { ActionTrackerViewMode };
 
 interface ActionItemsFiltersProps {
   searchQuery: string;
@@ -66,22 +69,22 @@ export function ActionItemsFilters({
   };
 
   return (
-    <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md p-3.5 sm:p-4 rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 shadow-xs space-y-3">
+    <div className="bg-card p-3.5 sm:p-4 rounded-xl border border-border paper-sheet shadow-xs space-y-3">
       {/* Top Main Row: Search + Action Controls */}
-      <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
+      <div className="flex flex-col lg:flex-row gap-3 items-stretch lg:items-center justify-between">
         {/* Search Input */}
         <div className="relative flex-1 max-w-md group">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400 group-focus-within:text-indigo-500 transition-colors" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
           <Input
             placeholder="Search action items, owners, meetings..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9 pr-8 h-9.5 bg-zinc-50/70 dark:bg-zinc-800/50 border-zinc-200 dark:border-zinc-800 focus-visible:ring-2 focus-visible:ring-indigo-500/30 text-xs rounded-xl font-medium"
+            className="pl-9 pr-8 h-9.5 bg-background border-border focus-visible:ring-2 text-xs rounded-lg font-medium"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery("")}
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-400 hover:text-zinc-600 transition-colors"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
             >
               <X className="h-3.5 w-3.5" />
             </button>
@@ -89,48 +92,76 @@ export function ActionItemsFilters({
         </div>
 
         {/* View Mode & Overdue Filter Button */}
-        <div className="flex items-center gap-2 justify-between sm:justify-end">
+        <div className="flex flex-wrap items-center gap-2 justify-between lg:justify-end">
           {/* Overdue Button */}
           <Button
             variant={showOverdueOnly ? "destructive" : "outline"}
             size="sm"
             onClick={() => setShowOverdueOnly(!showOverdueOnly)}
-            className={`flex items-center gap-1.5 text-xs h-9 px-3 font-semibold rounded-xl transition-all ${
+            className={`flex items-center gap-1.5 text-xs h-9 px-3 font-semibold rounded-lg transition-all ${
               showOverdueOnly
                 ? "bg-rose-500 hover:bg-rose-600 text-white shadow-xs"
-                : "border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-800/50 hover:bg-rose-50 dark:hover:bg-rose-950/30 text-zinc-700 dark:text-zinc-300"
+                : "border-border bg-card hover:bg-rose-500/10 text-foreground"
             }`}
           >
             <AlertTriangle className={`h-3.5 w-3.5 ${showOverdueOnly ? "text-white" : "text-rose-500"}`} />
             <span>Overdue</span>
           </Button>
 
-          {/* View Switcher */}
+          {/* 4 View Mode Switcher */}
           {setViewMode && (
-            <div className="flex items-center p-1 rounded-xl bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200 dark:border-zinc-700/60">
+            <div className="flex items-center p-1 rounded-lg bg-muted border border-border">
               <button
                 type="button"
                 onClick={() => setViewMode("table")}
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+                className={`flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded-md transition-all cursor-pointer ${
                   viewMode === "table"
-                    ? "bg-white dark:bg-zinc-900 text-indigo-600 dark:text-indigo-400 shadow-xs"
-                    : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200"
+                    ? "bg-card text-foreground shadow-xs"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
+                title="Table View"
               >
                 <LayoutList className="h-3.5 w-3.5" />
-                Table
+                <span className="hidden sm:inline">Table</span>
               </button>
               <button
                 type="button"
                 onClick={() => setViewMode("kanban")}
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+                className={`flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded-md transition-all cursor-pointer ${
                   viewMode === "kanban"
-                    ? "bg-white dark:bg-zinc-900 text-indigo-600 dark:text-indigo-400 shadow-xs"
-                    : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200"
+                    ? "bg-card text-foreground shadow-xs"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
+                title="Kanban Board View"
               >
                 <Kanban className="h-3.5 w-3.5" />
-                Kanban
+                <span className="hidden sm:inline">Kanban</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setViewMode("timeline")}
+                className={`flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded-md transition-all cursor-pointer ${
+                  viewMode === "timeline"
+                    ? "bg-card text-foreground shadow-xs"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+                title="Timeline / Gantt Roadmap View"
+              >
+                <CalendarRange className="h-3.5 w-3.5 text-blue-500" />
+                <span className="hidden sm:inline">Timeline</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setViewMode("matrix")}
+                className={`flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded-md transition-all cursor-pointer ${
+                  viewMode === "matrix"
+                    ? "bg-card text-foreground shadow-xs"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+                title="Eisenhower Priority Matrix View"
+              >
+                <LayoutGrid className="h-3.5 w-3.5 text-amber-500" />
+                <span className="hidden sm:inline">Matrix</span>
               </button>
             </div>
           )}
